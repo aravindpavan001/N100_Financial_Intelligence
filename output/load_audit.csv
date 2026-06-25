@@ -1,0 +1,3 @@
+table_name,rows_loaded,rejected_rows,status
+companies,92,0,Success
+sectors,92,0,Success

@@ -8,10 +8,13 @@ CREATE TABLE companies (
     id TEXT PRIMARY KEY,
     company_logo TEXT,
     company_name TEXT,
-    current_price REAL,
-    market_cap REAL,
-    stock_pe REAL,
-    dividend_yield REAL,
+    chart_link TEXT,
+    about_company TEXT,
+    website TEXT,
+    nse_profile TEXT,
+    bse_profile TEXT,
+    face_value REAL,
+    book_value REAL,
     roce_percentage REAL,
     roe_percentage REAL
 );
@@ -23,14 +26,14 @@ CREATE TABLE companies (
 CREATE TABLE analysis (
     id INTEGER PRIMARY KEY,
     company_id TEXT,
-    analysis_type TEXT,
-    stock_price_cagr TEXT,
-    roe TEXT,
+    compounded_sales_growth REAL,
+    compounded_profit_growth REAL,
+    stock_price_cagr REAL,
+    roe REAL,
 
     FOREIGN KEY (company_id)
         REFERENCES companies(id)
 );
-
 -- ===========================================
 -- BALANCE SHEET
 -- ===========================================
@@ -67,7 +70,7 @@ CREATE TABLE profitandloss (
     sales REAL,
     expenses REAL,
     operating_profit REAL,
-    opm REAL,
+    opm_percentage REAL,
     other_income REAL,
     interest REAL,
     depreciation REAL,
