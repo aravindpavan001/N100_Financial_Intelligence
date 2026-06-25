@@ -1,4 +1,13 @@
+import sqlite3
 import pandas as pd
+from pathlib import Path
 
-def load_excel(path):
-    return pd.read_excel(path)
+BASE_DIR = Path(__file__).resolve().parents[2]
+
+DATABASE = BASE_DIR / "nifty100.db"
+
+conn = sqlite3.connect(DATABASE)
+
+conn.execute("PRAGMA foreign_keys = ON")
+
+print("Database connection established.")
