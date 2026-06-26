@@ -1,3 +1,11 @@
 table_name,rows_loaded,rejected_rows,status
 companies,92,0,Success
 sectors,92,0,Success
+analysis,16,0,Success
+balancesheet,1140,0,Success
+cashflow,1068,0,Success
+profitandloss,1164,0,Success
+financial_ratios,1041,0,Success
+market_cap,552,0,Success
+peer_groups,56,0,Success
+stock_prices,5520,0,Success

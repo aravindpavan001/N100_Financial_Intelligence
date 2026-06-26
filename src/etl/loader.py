@@ -94,10 +94,7 @@ add_audit(
     0,
     "Success"
 )
-pd.DataFrame(audit).to_csv(
-    OUTPUT_DIR / "load_audit.csv",
-    index=False
-)
+
 
 analysis = pd.read_excel(
     DATA_DIR / "analysis.xlsx",
@@ -289,6 +286,11 @@ documents.to_sql(
 print("Documents inserted successfully!")
 
 add_audit("documents", len(documents), 0, "Success"))"""
+
+pd.DataFrame(audit).to_csv(
+    OUTPUT_DIR / "load_audit.csv",
+    index=False
+)
 
 print("\nLoad audit saved.")
 
