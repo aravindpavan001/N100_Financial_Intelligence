@@ -96,3 +96,104 @@ def calculate_roa(net_profit, total_assets):
         return None
 
     return (net_profit / total_assets) * 100
+
+def calculate_debt_to_equity(borrowings, equity, reserves):
+    """
+    Calculate Debt-to-Equity Ratio.
+
+    Formula:
+        Borrowings / (Equity + Reserves)
+
+    Returns:
+        0 if borrowings are 0.
+        None if equity + reserves <= 0.
+    """
+    if borrowings == 0:
+        return 0
+
+    total_equity = equity + reserves
+
+    if total_equity <= 0:
+        return None
+
+    return borrowings / total_equity
+
+
+def get_high_leverage_flag(debt_to_equity, sector):
+    """
+    Returns True if Debt-to-Equity is greater than 5
+    and the company is not in the Financials sector.
+    """
+    if debt_to_equity is None:
+        return False
+
+    if sector.lower() == "financials":
+        return False
+
+    return debt_to_equity > 5
+
+
+def calculate_interest_coverage(operating_profit, other_income, interest):
+    """
+    Calculate Interest Coverage Ratio.
+
+    Formula:
+        (Operating Profit + Other Income) / Interest
+
+    Returns:
+        None if interest is 0.
+    """
+    if interest == 0:
+        return None
+
+    return (operating_profit + other_income) / interest
+
+
+def get_icr_label(interest):
+    """
+    Returns 'Debt Free' when interest is 0.
+    """
+    if interest == 0:
+        return "Debt Free"
+
+    return None
+
+
+def get_icr_warning(icr):
+    """
+    Returns True if ICR is less than 1.5.
+
+    Returns False when ICR is None.
+    """
+    if icr is None:
+        return False
+
+    return icr < 1.5
+
+
+def calculate_net_debt(borrowings, investments):
+    """
+    Calculate Net Debt.
+
+    Formula:
+        Borrowings - Investments
+
+    Negative values are allowed.
+    """
+    return borrowings - investments
+
+
+def calculate_asset_turnover(sales, total_assets):
+    """
+    Calculate Asset Turnover.
+
+    Formula:
+        Sales / Total Assets
+
+    Returns:
+        None if total assets are 0.
+    """
+    if total_assets == 0:
+        return None
+
+    return sales / total_assets
