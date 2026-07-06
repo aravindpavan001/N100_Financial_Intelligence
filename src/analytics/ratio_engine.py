@@ -161,9 +161,10 @@ def calculate_company_cagr(history):
 
     return cagr_results        
 
-def calculate_kpis(row, cagr_results):
+def calculate_kpis(row, cagr_results, latest_year):
 
     company = row.company_id
+    year = row.year
 
     net_profit_margin = calculate_net_profit_margin(
         row.net_profit,
@@ -176,18 +177,37 @@ def calculate_kpis(row, cagr_results):
     )
 
     roe = calculate_roe(
-        row.net_profit,
-        row.equity_capital,
-        row.reserves,
+    row.net_profit,
+    row.equity_capital,
+    row.reserves,
     )
 
     roce = calculate_roce(
-        row.operating_profit,
-        row.equity_capital,
-        row.reserves,
-        row.borrowings,
-        "General",
+    row.operating_profit,
+    row.equity_capital,
+    row.reserves,
+    row.borrowings,
+    "General",
     )
+
+    if row.year_number == latest_year[company]:
+
+     compare_ratio(
+        company,
+        year,
+        "ROE",
+        roe,
+        row.roe_percentage,
+    )
+
+     compare_ratio(
+        company,
+        year,
+        "ROCE",
+        roce,
+        row.roce_percentage,
+    )
+
 
     roa = calculate_roa(
         row.net_profit,
@@ -329,7 +349,63 @@ def save_capital_csv(capital_rows):
         index=False,
     )
 
+def write_log(message):
+
+    with open(
+        "output/ratio_edge_cases.log",
+        "a",
+        encoding="utf-8",
+    ) as file:
+
+        file.write(message + "\n")
+
+def compare_ratio(
+    company,
+    year,
+    metric,
+    calculated,
+    source,
+):
+
+    if calculated is None:
+        return
+
+    if source is None:
+        return
+
+    difference = abs(calculated - source)
+
+    if difference <= 5:
+        return
+
+    if source < 2:
+        category = "Data Source Issue"
+    else:
+        category = "Version Difference"
+
+    write_log(
+        f"""
+========================================
+Company : {company}
+Year : {year}
+Metric : {metric}
+Source : {source:.2f}
+Calculated : {calculated:.2f}
+Difference : {difference:.2f}
+Category : {category}
+
+"""
+    )
+
 def main():
+
+    create_output_folder()
+
+    open(
+        "output/ratio_edge_cases.log",
+        "w",
+        encoding="utf-8",
+    ).close()
 
     print("=" * 70)
     print("DAY 12 RATIO ENGINE")
@@ -351,7 +427,12 @@ def main():
         balance,
         cashflow,
     )
-
+    latest_year = (
+    merged_df.groupby("company_id")["year_number"]
+    .max()
+    .to_dict()
+    )
+    
     create_output_folder()
 
     history = build_company_history(
@@ -372,6 +453,7 @@ def main():
             calculate_kpis(
                 row,
                 cagr_results,
+                latest_year,
             )
         )
 
