@@ -32,7 +32,14 @@ def load_financial_ratios(db_path):
     conn = sqlite3.connect(db_path)
 
     df = pd.read_sql(
-        "SELECT * FROM financial_ratios",
+        """
+     SELECT
+     fr.*,
+     s.broad_sector
+     FROM financial_ratios fr
+     LEFT JOIN sectors s
+     ON fr.company_id = s.company_id
+     """,
         conn,
     )
 
