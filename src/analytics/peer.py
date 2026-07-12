@@ -5,6 +5,9 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from openpyxl.styles import PatternFill
+from openpyxl import load_workbook
+
 
 # =====================================================
 # PATHS
@@ -15,6 +18,11 @@ DB_PATH = "nifty100.db"
 RADAR_FOLDER = os.path.join(
     "reports",
     "radar_charts",
+)
+
+PEER_OUTPUT = os.path.join(
+    "output",
+    "peer_comparison.xlsx",
 )
 
 os.makedirs(
@@ -93,7 +101,336 @@ def load_peer_percentiles(db_path):
 
     return df
 
+def prepare_peer_report_data(
+    db_path,
+):
 
+    peer_df = load_peer_groups(
+        db_path,
+    )
+
+    ratio_df = load_financial_ratios(
+        db_path,
+    )
+
+    percentile_df = load_peer_percentiles(
+        db_path,
+    )
+
+    merged = peer_df.merge(
+        ratio_df,
+        on="company_id",
+        how="left",
+    )
+
+    merged = merged.merge(
+        percentile_df,
+        on=[
+            "company_id",
+            "year",
+        ],
+        how="left",
+    )
+
+    return merged
+
+def pivot_percentiles(
+    percentile_df,
+):
+
+    pivot = percentile_df.pivot_table(
+        index=[
+            "company_id",
+            "peer_group_name",
+            "year",
+        ],
+        columns="metric",
+        values="percentile_rank",
+    )
+
+    pivot = pivot.reset_index()
+
+    return pivot
+
+def create_final_peer_report(
+    db_path,
+):
+
+    peer_df = load_peer_groups(
+        db_path,
+    )
+
+    ratio_df = load_financial_ratios(
+        db_path,
+    )
+
+    percentile_df = load_peer_percentiles(
+        db_path,
+    )
+
+    pivot_df = pivot_percentiles(
+        percentile_df,
+    )
+
+    report_df = peer_df.merge(
+        ratio_df,
+        on="company_id",
+        how="left",
+    )
+
+    report_df = report_df.merge(
+        pivot_df,
+        on=[
+            "company_id",
+            "peer_group_name",
+            "year",
+        ],
+        how="left",
+    )
+    
+    report_df = report_df.sort_values(
+    "year"
+)
+
+    report_df = report_df.groupby(
+    "company_id",
+    as_index=False,
+    ).tail(1)
+    
+    return report_df
+
+print()
+
+print("=" * 60)
+print("FINAL REPORT")
+print("=" * 60)
+
+final_df = create_final_peer_report(
+    DB_PATH,
+)
+
+print(final_df.head())
+
+print()
+
+print(final_df.shape)
+
+def export_peer_report(
+    final_df,
+):
+
+    writer = pd.ExcelWriter(
+        PEER_OUTPUT,
+        engine="openpyxl",
+    )
+
+    peer_groups = (
+        final_df["peer_group_name"]
+        .dropna()
+        .unique()
+    )
+
+    for group in peer_groups:
+
+        group_df = final_df[
+            final_df["peer_group_name"] == group
+        ]
+
+        group_df.to_excel(
+            writer,
+            sheet_name=group[:31],
+            index=False,
+        )
+
+    writer.close()
+
+    wb = load_workbook(
+        PEER_OUTPUT,
+    )
+
+    gold = PatternFill(
+        fill_type="solid",
+        fgColor="FFD966",
+    )
+
+    green = PatternFill(
+        fill_type="solid",
+        fgColor="C6EFCE",
+    )
+
+    yellow = PatternFill(
+        fill_type="solid",
+        fgColor="FFEB9C",
+    )
+
+    red = PatternFill(
+        fill_type="solid",
+        fgColor="FFC7CE",
+    )
+
+    for sheet in wb.sheetnames:
+
+        ws = wb[sheet]
+
+        headers = [
+            cell.value
+            for cell in ws[1]
+        ]
+
+        benchmark_col = headers.index(
+            "is_benchmark"
+        ) + 1
+
+        percentile_columns = []
+
+        for i, header in enumerate(
+            headers,
+            start=1,
+        ):
+
+            if (
+                header is not None
+                and header.endswith("_y")
+            ):
+
+                percentile_columns.append(i)
+
+        # -------------------------
+        # Gold Benchmark Row
+        # -------------------------
+
+        for row in range(
+            2,
+            ws.max_row + 1,
+        ):
+
+            if ws.cell(
+                row=row,
+                column=benchmark_col,
+            ).value == 1:
+
+                for col in range(
+                    1,
+                    ws.max_column + 1,
+                ):
+
+                    ws.cell(
+                        row=row,
+                        column=col,
+                    ).fill = gold
+
+        # -------------------------
+        # Percentile Colours
+        # -------------------------
+
+        for col in percentile_columns:
+
+            for row in range(
+                2,
+                ws.max_row + 1,
+            ):
+
+                cell = ws.cell(
+                    row=row,
+                    column=col,
+                )
+
+                value = cell.value
+
+                if (
+                    value is None
+                    or not isinstance(
+                        value,
+                        (
+                            int,
+                            float,
+                        ),
+                    )
+                ):
+                    continue
+
+                if value >= 75:
+
+                    cell.fill = green
+
+                elif value >= 25:
+
+                    cell.fill = yellow
+
+                else:
+
+                    cell.fill = red
+
+        # -------------------------
+        # Median Row
+        # -------------------------
+
+        median_row = ws.max_row + 1
+
+        ws.cell(
+            row=median_row,
+            column=1,
+        ).value = "Median"
+
+        for col in range(
+            2,
+            ws.max_column + 1,
+        ):
+
+            values = []
+
+            for row in range(
+                2,
+                median_row,
+            ):
+
+                value = ws.cell(
+                    row=row,
+                    column=col,
+                ).value
+
+                if isinstance(
+                    value,
+                    (
+                        int,
+                        float,
+                    ),
+                ):
+
+                    values.append(value)
+
+            if values:
+
+                values.sort()
+
+                n = len(values)
+
+                if n % 2 == 0:
+
+                    median = (
+                        values[n // 2 - 1]
+                        + values[n // 2]
+                    ) / 2
+
+                else:
+
+                    median = values[n // 2]
+
+                ws.cell(
+                    row=median_row,
+                    column=col,
+                ).value = round(
+                    median,
+                    2,
+                )
+
+    wb.save(
+        PEER_OUTPUT,
+    )
+
+    print()
+
+    print("Peer comparison workbook created.")
 # =====================================================
 # MERGE
 # =====================================================
@@ -689,3 +1026,47 @@ if __name__ == "__main__":
     print()
 
     print("=" * 60)
+    print("DAY 20")
+    print("=" * 60)
+
+    final_df = create_final_peer_report(
+    DB_PATH,
+    )
+
+    export_peer_report(
+    final_df,
+    )
+
+    print()
+
+    print("Peer comparison workbook created.")
+
+    print()
+
+    print(final_df.head())
+
+    print()
+
+    print(final_df.shape)
+
+    print()
+
+    print("=" * 60)
+
+    print()
+
+
+
+final_df = create_final_peer_report(
+    DB_PATH,
+)
+
+percentile_df = load_peer_percentiles(
+    DB_PATH,
+)
+
+pivot_df = pivot_percentiles(
+    percentile_df,
+)
+
+print()
