@@ -56,7 +56,7 @@ print(companies.head())
 companies.to_sql(
     "companies",
     conn,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -69,6 +69,12 @@ add_audit(
     "Success"
 )
 
+
+# ==========================================
+# Load Sectors
+# ==========================================
+
+
 # ==========================================
 # Load Sectors
 # ==========================================
@@ -79,10 +85,10 @@ sectors = pd.read_excel(
 
 print(sectors.head())
 
-sectors.to_sql(
-    "sectors",
+companies.to_sql(
+    "companies",
     conn,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -108,7 +114,7 @@ analysis = analysis[
 analysis.to_sql(
     "analysis",
     conn,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -142,7 +148,7 @@ balancesheet = balancesheet.drop_duplicates(
 balancesheet.to_sql(
     "balancesheet",
     conn,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -168,7 +174,7 @@ cashflow = cashflow.drop_duplicates(
 cashflow.to_sql(
     "cashflow",
     conn,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -194,7 +200,7 @@ profitandloss = profitandloss.drop_duplicates(
 profitandloss.to_sql(
     "profitandloss",
     conn,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -218,7 +224,7 @@ financial_ratios = financial_ratios.drop_duplicates(
 financial_ratios.to_sql(
     "financial_ratios",
     conn,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -233,7 +239,7 @@ market_cap = pd.read_excel(
 market_cap.to_sql(
     "market_cap",
     conn,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -248,7 +254,7 @@ peer_groups = pd.read_excel(
 peer_groups.to_sql(
     "peer_groups",
     conn,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -263,7 +269,7 @@ stock_prices = pd.read_excel(
 stock_prices.to_sql(
     "stock_prices",
     conn,
-    if_exists="append",
+    if_exists="replace",
     index=False
 )
 
@@ -293,6 +299,10 @@ pd.DataFrame(audit).to_csv(
 )
 
 print("\nLoad audit saved.")
+
+print("\nTABLES AFTER LOAD:")
+cursor = conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
+print(cursor.fetchall())
 
 conn.commit()
 conn.close()

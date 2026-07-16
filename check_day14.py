@@ -1,24 +1,6 @@
-import sqlite3
 import pandas as pd
 
-conn = sqlite3.connect("nifty100.db")
+df = pd.read_csv("output/screener_dataset.csv")
 
-print(pd.read_sql(
-    "SELECT COUNT(*) AS rows FROM financial_ratios",
-    conn,
-))
-
-print(pd.read_sql(
-    """
-    SELECT
-        COUNT(return_on_equity_pct) roe,
-        COUNT(debt_to_equity) de,
-        COUNT(asset_turnover) asset_turnover,
-        COUNT(free_cash_flow_cr) fcf,
-        COUNT(revenue_cagr_5yr) revenue_cagr
-    FROM financial_ratios
-    """,
-    conn,
-))
-
-conn.close()
+print(df["revenue_cagr_5yr"].notna().sum())
+print(df["pat_cagr_5yr"].notna().sum())

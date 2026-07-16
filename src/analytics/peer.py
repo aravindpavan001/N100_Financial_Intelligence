@@ -199,21 +199,7 @@ def create_final_peer_report(
     
     return report_df
 
-print()
 
-print("=" * 60)
-print("FINAL REPORT")
-print("=" * 60)
-
-final_df = create_final_peer_report(
-    DB_PATH,
-)
-
-print(final_df.head())
-
-print()
-
-print(final_df.shape)
 
 def export_peer_report(
     final_df,
@@ -1057,16 +1043,3 @@ if __name__ == "__main__":
 
 
 
-final_df = create_final_peer_report(
-    DB_PATH,
-)
-
-percentile_df = load_peer_percentiles(
-    DB_PATH,
-)
-
-pivot_df = pivot_percentiles(
-    percentile_df,
-)
-
-print()
