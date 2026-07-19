@@ -63,16 +63,29 @@ def get_company_kpis(company_name):
     SELECT
         c.roce_percentage,
         c.roe_percentage,
+
         fr.net_profit_margin_pct,
         fr.debt_to_equity,
         fr.revenue_cagr_5yr,
+        fr.pat_cagr_5yr,
         fr.free_cash_flow_cr,
-        fr.composite_quality_score
+        fr.composite_quality_score,
+
+        mc.pe_ratio,
+        mc.pb_ratio,
+        mc.ev_ebitda,
+        mc.dividend_yield_pct
     FROM companies c
+
     JOIN financial_ratios fr
-        ON c.id = fr.company_id
+    ON c.id = fr.company_id
+
+    LEFT JOIN market_cap mc
+    ON c.id = mc.company_id
     WHERE c.company_name = ?
-    ORDER BY fr.year DESC
+    ORDER BY
+    fr.year DESC,
+    mc.year DESC
     LIMIT 1
     """
 

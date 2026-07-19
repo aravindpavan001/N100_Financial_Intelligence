@@ -114,7 +114,6 @@ ratios.to_sql(
     index=False
 )
 
-conn.commit()
 conn.close()
 
 print("=" * 50)
@@ -123,8 +122,7 @@ print("=" * 50)
 
 print(
     ratios.loc[
-        (ratios["company_id"] == "ABB") &
-        (ratios["year"] == "Mar 2024"),
+        ratios["company_id"] == "ABB",
         [
             "company_id",
             "year",

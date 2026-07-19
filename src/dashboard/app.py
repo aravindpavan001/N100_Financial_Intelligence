@@ -1,7 +1,39 @@
 import streamlit as st
 import utils.db as db
 import os
+def get_recommendation(row):
 
+    quality = row["composite_quality_score"]
+    pe = row["pe_ratio"]
+    debt = row["debt_to_equity"]
+
+    score = quality
+
+    if pe <= 20:
+        score += 10
+    elif pe > 40:
+        score -= 10
+
+    if debt <= 0.5:
+        score += 10
+    elif debt > 1:
+        score -= 10
+
+    score = max(0, min(100, score))
+
+    if score >= 80:
+        recommendation = "🟢 BUY"
+        reason = "Strong quality, attractive valuation and healthy balance sheet."
+
+    elif score >= 60:
+        recommendation = "🟡 HOLD"
+        reason = "Average valuation with acceptable financial quality."
+
+    else:
+        recommendation = "🔴 AVOID"
+        reason = "Weak financial profile or expensive valuation."
+
+    return recommendation, reason, score
 print("=" * 60)
 print("DB MODULE:", db.__file__)
 print("=" * 60)
@@ -299,6 +331,8 @@ st.download_button(
 # --------------------------------------------------
 company = db.get_company_profile(selected_company)
 kpis = db.get_company_kpis(selected_company)
+print(kpis.columns)
+print(kpis)
 valuation = db.get_company_valuation(selected_company)
 history = db.get_profit_history(selected_company)
 roe_history = db.get_roe_history(selected_company)
@@ -332,7 +366,7 @@ st.subheader("Financial KPIs")
 if not kpis.empty:
 
     row = kpis.iloc[0]
-
+    recommendation, reason, score = get_recommendation(row)   
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -346,8 +380,11 @@ if not kpis.empty:
     with col3:
         st.metric("Revenue CAGR (5Y)", f"{row['revenue_cagr_5yr']:.2f}%")
         st.metric("Free Cash Flow", f"{row['free_cash_flow_cr']:.2f}")    
-        st.metric("Quality Score",f"{row['composite_quality_score']:.1f}"
-    )
+        st.metric("Quality Score",f"{row['composite_quality_score']:.1f}")
+        st.subheader("Investment Recommendation")
+        st.metric("Recommendation", recommendation)
+        st.metric("Valuation Score", f"{score:.0f}/100")
+        st.info(reason)
 
 st.subheader("Valuation")
 if not valuation.empty:
