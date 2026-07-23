@@ -1,0 +1,42 @@
+company_id,company_name,previous_year,current_year,previous_pattern,current_pattern
+ADANIENSOL,Adani Energy Solutions Ltd,Mar 2023,Mar 2024,Mixed,Reinvestor
+ADANIENT,Adani Enterprises Ltd,Mar 2023,Mar 2024,Reinvestor,Mixed
+ADANIGREEN,Adani Green Energy Ltd,Mar 2023,Mar 2024,Reinvestor,Mixed
+AXISBANK,Axis Bank Ltd,Mar 2023,Mar 2024,Mixed,Growth Funded by Debt
+BAJAJ-AUTO,Bajaj Auto Ltd,Mar 2023,Mar 2024,Liquidating Assets,Reinvestor
+BANKBARODA,Bank of Baroda,Mar 2023,Mar 2024,Pre-Revenue,Growth Funded by Debt
+BEL,Bharat Electronics Ltd,Mar 2023,Mar 2024,Liquidating Assets,Reinvestor
+BRITANNIA,Britannia Industries Ltd,Mar 2023,Mar 2024,Reinvestor,Liquidating Assets
+CANBK,Canara Bank,Mar 2023,Mar 2024,Growth Funded by Debt,Reinvestor
+DLF,DLF Ltd,Mar 2023,Mar 2024,Reinvestor,Mixed
+GAIL,GAIL (India) Ltd,Mar 2023,Mar 2024,Mixed,Reinvestor
+GODREJCP,Godrej Consumer Products Ltd,Mar 2023,Mar 2024,Reinvestor,Mixed
+HAVELLS,Havells India Ltd,Mar 2023,Mar 2024,Liquidating Assets,Reinvestor
+HDFCBANK,HDFC Bank Ltd,Mar 2023,Mar 2024,Mixed,Liquidating Assets
+HDFCLIFE,HDFC Life Insurance Company Ltd,Mar 2023,Mar 2024,Mixed,Reinvestor
+ICICIBANK,ICICI Bank Ltd,Mar 2023,Mar 2024,Growth Funded by Debt,Mixed
+ICICIPRULI,ICICI Prudential Life Insurance Company Ltd,Mar 2023,Mar 2024,Reinvestor,Unknown
+INDUSINDBK,IndusInd Bank Ltd,Mar 2023,Mar 2024,Growth Funded by Debt,Pre-Revenue
+IRFC,Indian Railway Finance Corporation Ltd,Mar 2023,Mar 2024,Distress Signal,Reinvestor
+ITC,"ITC Ltd
+",Mar 2023,Mar 2024,Reinvestor,Liquidating Assets
+JINDALSTEL,Jindal Steel & Power Ltd,Mar 2023,Mar 2024,Reinvestor,Mixed
+JIOFIN,Jio Financial Services Ltd,Mar 2023,Mar 2024,Reinvestor,Unknown
+KOTAKBANK,"Kotak Mahindra Bank Ltd
+",Mar 2023,Mar 2024,Growth Funded by Debt,Mixed
+LODHA,Macrotech Developers Ltd,Mar 2023,Mar 2024,Liquidating Assets,Mixed
+LT,Larsen & Toubro Ltd,Mar 2023,Mar 2024,Reinvestor,Liquidating Assets
+MOTHERSON,Samvardhana Motherson International Ltd,Mar 2023,Mar 2024,Reinvestor,Mixed
+PNB,Punjab National Bank,Mar 2023,Mar 2024,Mixed,Growth Funded by Debt
+RELIANCE,"Reliance Industries Ltd
+",Mar 2023,Mar 2024,Mixed,Reinvestor
+SBIN,State Bank of India,Mar 2023,Mar 2024,Growth Funded by Debt,Reinvestor
+SHRIRAMFIN,"Shriram Finance Ltd
+",Mar 2023,Mar 2024,Distress Signal,Growth Funded by Debt
+SUNPHARMA,Sun Pharmaceuticals Industries Ltd,Mar 2023,Mar 2024,Mixed,Reinvestor
+TATACONSUM,Tata Consumer Products Ltd,Mar 2023,Mar 2024,Reinvestor,Mixed
+TATAPOWER,"Tata Power Company Ltd
+",Mar 2023,Mar 2024,Mixed,Reinvestor
+TITAN,"Titan Company Ltd
+",Mar 2023,Mar 2024,Mixed,Reinvestor
+TORNTPHARM,Torrent Pharmaceuticals Ltd,Mar 2023,Mar 2024,Mixed,Reinvestor

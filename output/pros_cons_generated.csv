@@ -1,0 +1,406 @@
+company_id,type,rule_id,text,confidence_pct
+ABB,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+ABB,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+ABB,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+ABB,Pro,P07,High interest coverage reflects low financial stress.,92
+ADANIENSOL,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+ADANIENSOL,Pro,P05,High operating margins indicate strong pricing power.,86
+ADANIENSOL,Con,C01,High debt-to-equity ratio increases financial risk.,90
+ADANIENSOL,Con,C08,Low return on equity indicates weak capital efficiency.,82
+ADANIENSOL,Con,C09,Large debt burden may affect future financial flexibility.,78
+ADANIENT,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+ADANIENT,Con,C08,Low return on equity indicates weak capital efficiency.,82
+ADANIENT,Con,C09,Large debt burden may affect future financial flexibility.,78
+ADANIGREEN,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+ADANIGREEN,Pro,P05,High operating margins indicate strong pricing power.,86
+ADANIGREEN,Con,C01,High debt-to-equity ratio increases financial risk.,90
+ADANIGREEN,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+ADANIGREEN,Con,C09,Large debt burden may affect future financial flexibility.,78
+ADANIPORTS,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+ADANIPORTS,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+ADANIPORTS,Pro,P05,High operating margins indicate strong pricing power.,86
+ADANIPORTS,Con,C09,Large debt burden may affect future financial flexibility.,78
+ADANIPOWER,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+ADANIPOWER,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+ADANIPOWER,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+ADANIPOWER,Pro,P05,High operating margins indicate strong pricing power.,86
+ADANIPOWER,Con,C09,Large debt burden may affect future financial flexibility.,78
+AMBUJACEM,Pro,P07,High interest coverage reflects low financial stress.,92
+AMBUJACEM,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+APOLLOHOSP,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+APOLLOHOSP,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+ASIANPAINT,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+ASIANPAINT,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+ASIANPAINT,Pro,P07,High interest coverage reflects low financial stress.,92
+BAJAJ-AUTO,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+BAJAJ-AUTO,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+BAJAJ-AUTO,Pro,P07,High interest coverage reflects low financial stress.,92
+AXISBANK,Pro,P05,High operating margins indicate strong pricing power.,86
+AXISBANK,Con,C01,High debt-to-equity ratio increases financial risk.,90
+AXISBANK,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+AXISBANK,Con,C09,Large debt burden may affect future financial flexibility.,78
+BAJAJFINSV,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+BAJAJFINSV,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+BAJAJFINSV,Pro,P05,High operating margins indicate strong pricing power.,86
+BAJAJFINSV,Con,C01,High debt-to-equity ratio increases financial risk.,90
+BAJAJFINSV,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+BAJAJFINSV,Con,C09,Large debt burden may affect future financial flexibility.,78
+BAJAJHLDNG,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+BAJAJHLDNG,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+BAJAJHLDNG,Pro,P05,High operating margins indicate strong pricing power.,86
+BAJAJHLDNG,Pro,P07,High interest coverage reflects low financial stress.,92
+BAJFINANCE,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+BAJFINANCE,Pro,P05,High operating margins indicate strong pricing power.,86
+BAJFINANCE,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+BAJFINANCE,Pro,P07,High interest coverage reflects low financial stress.,92
+BAJFINANCE,Con,C01,High debt-to-equity ratio increases financial risk.,90
+BAJFINANCE,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+BAJFINANCE,Con,C09,Large debt burden may affect future financial flexibility.,78
+BANKBARODA,Pro,P05,High operating margins indicate strong pricing power.,86
+BANKBARODA,Con,C01,High debt-to-equity ratio increases financial risk.,90
+BANKBARODA,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+BANKBARODA,Con,C09,Large debt burden may affect future financial flexibility.,78
+BHARTIARTL,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+BHARTIARTL,Pro,P05,High operating margins indicate strong pricing power.,86
+BHARTIARTL,Con,C01,High debt-to-equity ratio increases financial risk.,90
+BHARTIARTL,Con,C09,Large debt burden may affect future financial flexibility.,78
+BEL,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+BEL,Pro,P07,High interest coverage reflects low financial stress.,92
+BEL,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+BHEL,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+BHEL,Con,C03,Low operating margin suggests margin pressure.,80
+BHEL,Con,C07,Revenue CAGR below 5% indicates weak long-term growth.,85
+BHEL,Con,C08,Low return on equity indicates weak capital efficiency.,82
+BOSCHLTD,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+BOSCHLTD,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+BOSCHLTD,Pro,P07,High interest coverage reflects low financial stress.,92
+BPCL,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+BPCL,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+BPCL,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+BPCL,Pro,P07,High interest coverage reflects low financial stress.,92
+BPCL,Con,C09,Large debt burden may affect future financial flexibility.,78
+BRITANNIA,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+BRITANNIA,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+BRITANNIA,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+BRITANNIA,Pro,P07,High interest coverage reflects low financial stress.,92
+CANBK,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+CANBK,Con,C01,High debt-to-equity ratio increases financial risk.,90
+CANBK,Con,C03,Low operating margin suggests margin pressure.,80
+CANBK,Con,C09,Large debt burden may affect future financial flexibility.,78
+CHOLAFIN,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+CHOLAFIN,Pro,P05,High operating margins indicate strong pricing power.,86
+CHOLAFIN,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+CHOLAFIN,Pro,P07,High interest coverage reflects low financial stress.,92
+CHOLAFIN,Con,C01,High debt-to-equity ratio increases financial risk.,90
+CHOLAFIN,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+CHOLAFIN,Con,C09,Large debt burden may affect future financial flexibility.,78
+CIPLA,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+CIPLA,Pro,P05,High operating margins indicate strong pricing power.,86
+CIPLA,Pro,P07,High interest coverage reflects low financial stress.,92
+COALINDIA,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+COALINDIA,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+COALINDIA,Pro,P05,High operating margins indicate strong pricing power.,86
+COALINDIA,Pro,P07,High interest coverage reflects low financial stress.,92
+DABUR,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+DABUR,Pro,P07,High interest coverage reflects low financial stress.,92
+DIVISLAB,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+DIVISLAB,Pro,P05,High operating margins indicate strong pricing power.,86
+DIVISLAB,Pro,P07,High interest coverage reflects low financial stress.,92
+DLF,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+DLF,Pro,P05,High operating margins indicate strong pricing power.,86
+DLF,Con,C07,Revenue CAGR below 5% indicates weak long-term growth.,85
+DLF,Con,C08,Low return on equity indicates weak capital efficiency.,82
+DMART,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+DMART,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+DMART,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+DMART,Pro,P07,High interest coverage reflects low financial stress.,92
+DMART,Con,C03,Low operating margin suggests margin pressure.,80
+DRREDDY,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+DRREDDY,Pro,P05,High operating margins indicate strong pricing power.,86
+DRREDDY,Pro,P07,High interest coverage reflects low financial stress.,92
+EICHERMOT,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+EICHERMOT,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+EICHERMOT,Pro,P05,High operating margins indicate strong pricing power.,86
+EICHERMOT,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+EICHERMOT,Pro,P07,High interest coverage reflects low financial stress.,92
+GAIL,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+GAIL,Pro,P07,High interest coverage reflects low financial stress.,92
+GAIL,Con,C09,Large debt burden may affect future financial flexibility.,78
+GODREJCP,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+GODREJCP,Con,C04,Company is currently loss making.,95
+GODREJCP,Con,C08,Low return on equity indicates weak capital efficiency.,82
+GRASIM,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+GRASIM,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+GRASIM,Con,C09,Large debt burden may affect future financial flexibility.,78
+HAL,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+HAL,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+HAL,Pro,P05,High operating margins indicate strong pricing power.,86
+HAL,Pro,P07,High interest coverage reflects low financial stress.,92
+HAVELLS,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+HAVELLS,Pro,P07,High interest coverage reflects low financial stress.,92
+HCLTECH,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+HCLTECH,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+HCLTECH,Pro,P07,High interest coverage reflects low financial stress.,92
+HDFCBANK,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+HDFCBANK,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+HDFCBANK,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+HDFCBANK,Con,C01,High debt-to-equity ratio increases financial risk.,90
+HDFCBANK,Con,C03,Low operating margin suggests margin pressure.,80
+HDFCBANK,Con,C05,Low interest coverage indicates debt servicing risk.,92
+HDFCBANK,Con,C09,Large debt burden may affect future financial flexibility.,78
+HDFCLIFE,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+HDFCLIFE,Pro,P05,High operating margins indicate strong pricing power.,86
+HDFCLIFE,Pro,P07,High interest coverage reflects low financial stress.,92
+HDFCLIFE,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+HEROMOTOCO,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+HEROMOTOCO,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+HEROMOTOCO,Pro,P05,High operating margins indicate strong pricing power.,86
+HEROMOTOCO,Pro,P07,High interest coverage reflects low financial stress.,92
+HEROMOTOCO,Con,C07,Revenue CAGR below 5% indicates weak long-term growth.,85
+HINDALCO,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+HINDALCO,Pro,P05,High operating margins indicate strong pricing power.,86
+HINDALCO,Pro,P07,High interest coverage reflects low financial stress.,92
+HINDALCO,Con,C08,Low return on equity indicates weak capital efficiency.,82
+HINDALCO,Con,C09,Large debt burden may affect future financial flexibility.,78
+HINDUNILVR,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+HINDUNILVR,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+HINDUNILVR,Pro,P05,High operating margins indicate strong pricing power.,86
+HINDUNILVR,Pro,P07,High interest coverage reflects low financial stress.,92
+ICICIBANK,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+ICICIBANK,Con,C01,High debt-to-equity ratio increases financial risk.,90
+ICICIBANK,Con,C03,Low operating margin suggests margin pressure.,80
+ICICIBANK,Con,C05,Low interest coverage indicates debt servicing risk.,92
+ICICIBANK,Con,C09,Large debt burden may affect future financial flexibility.,78
+ICICIGI,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+ICICIGI,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+ICICIGI,Pro,P05,High operating margins indicate strong pricing power.,86
+ICICIGI,Pro,P07,High interest coverage reflects low financial stress.,92
+ICICIPRULI,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+ICICIPRULI,Pro,P07,High interest coverage reflects low financial stress.,92
+ICICIPRULI,Con,C03,Low operating margin suggests margin pressure.,80
+ICICIPRULI,Con,C08,Low return on equity indicates weak capital efficiency.,82
+INDUSINDBK,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+INDUSINDBK,Pro,P05,High operating margins indicate strong pricing power.,86
+INDUSINDBK,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+INDUSINDBK,Con,C01,High debt-to-equity ratio increases financial risk.,90
+INDUSINDBK,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+INDUSINDBK,Con,C09,Large debt burden may affect future financial flexibility.,78
+INFY,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+INFY,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+INFY,Pro,P07,High interest coverage reflects low financial stress.,92
+IOC,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+IOC,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+IOC,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+IOC,Pro,P07,High interest coverage reflects low financial stress.,92
+IOC,Con,C07,Revenue CAGR below 5% indicates weak long-term growth.,85
+IOC,Con,C09,Large debt burden may affect future financial flexibility.,78
+IRCTC,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+IRCTC,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+IRCTC,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+IRCTC,Pro,P05,High operating margins indicate strong pricing power.,86
+IRCTC,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+IRCTC,Pro,P07,High interest coverage reflects low financial stress.,92
+IRFC,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+IRFC,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+IRFC,Pro,P05,High operating margins indicate strong pricing power.,86
+IRFC,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+IRFC,Con,C01,High debt-to-equity ratio increases financial risk.,90
+IRFC,Con,C05,Low interest coverage indicates debt servicing risk.,92
+IRFC,Con,C09,Large debt burden may affect future financial flexibility.,78
+ITC,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+ITC,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+ITC,Pro,P05,High operating margins indicate strong pricing power.,86
+ITC,Pro,P07,High interest coverage reflects low financial stress.,92
+JINDALSTEL,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+JINDALSTEL,Con,C09,Large debt burden may affect future financial flexibility.,78
+JIOFIN,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+JIOFIN,Pro,P03,Debt-free balance sheet provides financial flexibility.,98
+JIOFIN,Pro,P05,High operating margins indicate strong pricing power.,86
+JIOFIN,Pro,P07,High interest coverage reflects low financial stress.,92
+JIOFIN,Con,C08,Low return on equity indicates weak capital efficiency.,82
+JSWENERGY,Pro,P05,High operating margins indicate strong pricing power.,86
+JSWENERGY,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+JSWENERGY,Con,C07,Revenue CAGR below 5% indicates weak long-term growth.,85
+JSWENERGY,Con,C08,Low return on equity indicates weak capital efficiency.,82
+JSWENERGY,Con,C09,Large debt burden may affect future financial flexibility.,78
+JSWSTEEL,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+JSWSTEEL,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+JSWSTEEL,Con,C09,Large debt burden may affect future financial flexibility.,78
+KOTAKBANK,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+KOTAKBANK,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+KOTAKBANK,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+KOTAKBANK,Con,C01,High debt-to-equity ratio increases financial risk.,90
+KOTAKBANK,Con,C03,Low operating margin suggests margin pressure.,80
+KOTAKBANK,Con,C05,Low interest coverage indicates debt servicing risk.,92
+KOTAKBANK,Con,C09,Large debt burden may affect future financial flexibility.,78
+LICI,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+LICI,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+LICI,Pro,P03,Debt-free balance sheet provides financial flexibility.,98
+LICI,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+LICI,Pro,P07,High interest coverage reflects low financial stress.,92
+LICI,Con,C03,Low operating margin suggests margin pressure.,80
+LODHA,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+LODHA,Pro,P05,High operating margins indicate strong pricing power.,86
+LODHA,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+LODHA,Con,C08,Low return on equity indicates weak capital efficiency.,82
+LT,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+LT,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+LTIM,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+LTIM,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+LTIM,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+LTIM,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+LTIM,Pro,P07,High interest coverage reflects low financial stress.,92
+M&M,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+M&M,Con,C09,Large debt burden may affect future financial flexibility.,78
+MARUTI,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+MARUTI,Pro,P07,High interest coverage reflects low financial stress.,92
+MOTHERSON,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+MOTHERSON,Con,C03,Low operating margin suggests margin pressure.,80
+MOTHERSON,Con,C09,Large debt burden may affect future financial flexibility.,78
+NAUKRI,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+NAUKRI,Pro,P05,High operating margins indicate strong pricing power.,86
+NAUKRI,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+NAUKRI,Pro,P07,High interest coverage reflects low financial stress.,92
+NAUKRI,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+NAUKRI,Con,C08,Low return on equity indicates weak capital efficiency.,82
+NESTLEIND,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+NESTLEIND,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+NESTLEIND,Pro,P07,High interest coverage reflects low financial stress.,92
+NHPC,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+NHPC,Pro,P05,High operating margins indicate strong pricing power.,86
+NHPC,Pro,P07,High interest coverage reflects low financial stress.,92
+NHPC,Con,C07,Revenue CAGR below 5% indicates weak long-term growth.,85
+NHPC,Con,C09,Large debt burden may affect future financial flexibility.,78
+NTPC,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+NTPC,Pro,P05,High operating margins indicate strong pricing power.,86
+NTPC,Con,C09,Large debt burden may affect future financial flexibility.,78
+ONGC,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+ONGC,Pro,P07,High interest coverage reflects low financial stress.,92
+ONGC,Con,C09,Large debt burden may affect future financial flexibility.,78
+PFC,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+PFC,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+PFC,Pro,P05,High operating margins indicate strong pricing power.,86
+PFC,Con,C01,High debt-to-equity ratio increases financial risk.,90
+PFC,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+PFC,Con,C05,Low interest coverage indicates debt servicing risk.,92
+PFC,Con,C09,Large debt burden may affect future financial flexibility.,78
+PIDILITIND,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+PIDILITIND,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+PIDILITIND,Pro,P07,High interest coverage reflects low financial stress.,92
+PNB,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+PNB,Con,C01,High debt-to-equity ratio increases financial risk.,90
+PNB,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+PNB,Con,C09,Large debt burden may affect future financial flexibility.,78
+POWERGRID,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+POWERGRID,Pro,P05,High operating margins indicate strong pricing power.,86
+POWERGRID,Con,C09,Large debt burden may affect future financial flexibility.,78
+RECLTD,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+RECLTD,Pro,P05,High operating margins indicate strong pricing power.,86
+RECLTD,Con,C01,High debt-to-equity ratio increases financial risk.,90
+RECLTD,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+RECLTD,Con,C09,Large debt burden may affect future financial flexibility.,78
+RELIANCE,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+RELIANCE,Con,C08,Low return on equity indicates weak capital efficiency.,82
+RELIANCE,Con,C09,Large debt burden may affect future financial flexibility.,78
+SBILIFE,Pro,P03,Debt-free balance sheet provides financial flexibility.,98
+SBILIFE,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+SBILIFE,Pro,P07,High interest coverage reflects low financial stress.,92
+SBILIFE,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+SBILIFE,Con,C03,Low operating margin suggests margin pressure.,80
+SHREECEM,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+SHREECEM,Pro,P07,High interest coverage reflects low financial stress.,92
+SHREECEM,Con,C08,Low return on equity indicates weak capital efficiency.,82
+SHRIRAMFIN,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+SHRIRAMFIN,Pro,P05,High operating margins indicate strong pricing power.,86
+SHRIRAMFIN,Con,C01,High debt-to-equity ratio increases financial risk.,90
+SHRIRAMFIN,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+SHRIRAMFIN,Con,C05,Low interest coverage indicates debt servicing risk.,92
+SHRIRAMFIN,Con,C09,Large debt burden may affect future financial flexibility.,78
+SUNPHARMA,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+SUNPHARMA,Pro,P05,High operating margins indicate strong pricing power.,86
+SUNPHARMA,Pro,P07,High interest coverage reflects low financial stress.,92
+TATACONSUM,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+TATACONSUM,Pro,P07,High interest coverage reflects low financial stress.,92
+TATACONSUM,Con,C08,Low return on equity indicates weak capital efficiency.,82
+TATAMOTORS,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+TATAMOTORS,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+TATAMOTORS,Con,C09,Large debt burden may affect future financial flexibility.,78
+TATAPOWER,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+TATAPOWER,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+TATAPOWER,Con,C09,Large debt burden may affect future financial flexibility.,78
+TATASTEEL,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+TATASTEEL,Con,C04,Company is currently loss making.,95
+TATASTEEL,Con,C07,Revenue CAGR below 5% indicates weak long-term growth.,85
+TATASTEEL,Con,C08,Low return on equity indicates weak capital efficiency.,82
+TATASTEEL,Con,C09,Large debt burden may affect future financial flexibility.,78
+TCS,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+TCS,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+TCS,Pro,P05,High operating margins indicate strong pricing power.,86
+TCS,Pro,P07,High interest coverage reflects low financial stress.,92
+TECHM,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+TECHM,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+TECHM,Pro,P07,High interest coverage reflects low financial stress.,92
+TECHM,Con,C03,Low operating margin suggests margin pressure.,80
+TECHM,Con,C06,Dividend payout above 100% may not be sustainable.,84
+TECHM,Con,C08,Low return on equity indicates weak capital efficiency.,82
+TITAN,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+TITAN,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+TITAN,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+TITAN,Con,C09,Large debt burden may affect future financial flexibility.,78
+TORNTPHARM,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+TORNTPHARM,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+TORNTPHARM,Pro,P05,High operating margins indicate strong pricing power.,86
+TRENT,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+TRENT,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+TRENT,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+TVSMOTOR,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+TVSMOTOR,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+TVSMOTOR,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+TVSMOTOR,Con,C01,High debt-to-equity ratio increases financial risk.,90
+TVSMOTOR,Con,C02,Negative free cash flow indicates cash generation concerns.,88
+TVSMOTOR,Con,C09,Large debt burden may affect future financial flexibility.,78
+INDIGO,Pro,P01,High return on equity demonstrates excellent capital efficiency.,90
+INDIGO,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+INDIGO,Pro,P04,Revenue growing above 15% CAGR reflects strong business momentum.,85
+INDIGO,Pro,P05,High operating margins indicate strong pricing power.,86
+INDIGO,Pro,P06,Profit growth above 20% creates long-term shareholder value.,87
+INDIGO,Pro,P07,High interest coverage reflects low financial stress.,92
+SIEMENS,Pro,P02,Positive free cash flow supports healthy business fundamentals.,88
+SIEMENS,Pro,P07,High interest coverage reflects low financial stress.,92
+ABB,Con,C99,Some financial indicators require continued monitoring.,65
+ADANIENT,Pro,P99,Business demonstrates stable operating performance.,65
+APOLLOHOSP,Con,C99,Some financial indicators require continued monitoring.,65
+ASIANPAINT,Con,C99,Some financial indicators require continued monitoring.,65
+BAJAJ-AUTO,Con,C99,Some financial indicators require continued monitoring.,65
+BAJAJHLDNG,Con,C99,Some financial indicators require continued monitoring.,65
+BHEL,Pro,P99,Business demonstrates stable operating performance.,65
+BOSCHLTD,Con,C99,Some financial indicators require continued monitoring.,65
+BRITANNIA,Con,C99,Some financial indicators require continued monitoring.,65
+CIPLA,Con,C99,Some financial indicators require continued monitoring.,65
+COALINDIA,Con,C99,Some financial indicators require continued monitoring.,65
+DABUR,Con,C99,Some financial indicators require continued monitoring.,65
+DIVISLAB,Con,C99,Some financial indicators require continued monitoring.,65
+DRREDDY,Con,C99,Some financial indicators require continued monitoring.,65
+EICHERMOT,Con,C99,Some financial indicators require continued monitoring.,65
+GODREJCP,Pro,P99,Business demonstrates stable operating performance.,65
+HAL,Con,C99,Some financial indicators require continued monitoring.,65
+HAVELLS,Con,C99,Some financial indicators require continued monitoring.,65
+HCLTECH,Con,C99,Some financial indicators require continued monitoring.,65
+HINDUNILVR,Con,C99,Some financial indicators require continued monitoring.,65
+ICICIGI,Con,C99,Some financial indicators require continued monitoring.,65
+INFY,Con,C99,Some financial indicators require continued monitoring.,65
+IRCTC,Con,C99,Some financial indicators require continued monitoring.,65
+ITC,Con,C99,Some financial indicators require continued monitoring.,65
+JINDALSTEL,Pro,P99,Business demonstrates stable operating performance.,65
+LT,Con,C99,Some financial indicators require continued monitoring.,65
+LTIM,Con,C99,Some financial indicators require continued monitoring.,65
+M&M,Pro,P99,Business demonstrates stable operating performance.,65
+MARUTI,Con,C99,Some financial indicators require continued monitoring.,65
+NESTLEIND,Con,C99,Some financial indicators require continued monitoring.,65
+PIDILITIND,Con,C99,Some financial indicators require continued monitoring.,65
+SUNPHARMA,Con,C99,Some financial indicators require continued monitoring.,65
+TCS,Con,C99,Some financial indicators require continued monitoring.,65
+TORNTPHARM,Con,C99,Some financial indicators require continued monitoring.,65
+TRENT,Con,C99,Some financial indicators require continued monitoring.,65
+INDIGO,Con,C99,Some financial indicators require continued monitoring.,65
+SIEMENS,Con,C99,Some financial indicators require continued monitoring.,65
