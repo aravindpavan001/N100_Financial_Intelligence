@@ -265,7 +265,6 @@ print(pattern_changes.head())
 
 print()
 print("Companies Changed :", len(pattern_changes))
-print("Companies Changed :", len(pattern_changes))
 # =====================================================
 # SAVE PATTERN CHANGES
 # =====================================================

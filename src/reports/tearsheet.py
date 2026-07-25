@@ -21,6 +21,26 @@ DB_PATH = BASE_DIR / "nifty100.db"
 OUTPUT_DIR = BASE_DIR / "output"
 
 REPORT_DIR = BASE_DIR / "reports"
+TEARSHEET_DIR = REPORT_DIR / "tearsheets"
+
+SECTOR_DIR = REPORT_DIR / "sector"
+
+PORTFOLIO_DIR = REPORT_DIR / "portfolio"
+
+TEARSHEET_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+SECTOR_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+PORTFOLIO_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
 
 SAMPLE_DIR = REPORT_DIR / "sample"
 
@@ -511,11 +531,46 @@ def generate_tearsheet(company_id):
     profit = data["profit"]
     balance = data["balance"]
     cash = data["cash"]
+    if (
+      len(profit) < 3
+      or
+      len(balance) < 3
+       or
+     len(cash) < 3
+     ):
+
+      return False
     capital = data["capital"]
+    if capital.empty:
+     print(f"Skipping {company_id} - Cashflow Intelligence data missing")
+     return False
     pros = data["pros"]
     cons = data["cons"]
+    # --------------------------------------------------
+    # Validate required data
+    # --------------------------------------------------
 
-    pdf_path = SAMPLE_DIR / f"{company_id}_tearsheet.pdf"
+    if ratios.empty:
+      print(f"Skipping {company_id} - Financial ratios missing")
+      return False
+
+    if len(profit) < 3:
+     print(f"Skipping {company_id} - Less than 3 years Profit data")
+     return False
+
+    if len(balance) < 3:
+     print(f"Skipping {company_id} - Less than 3 years Balance Sheet data")
+     return False
+
+    if len(cash) < 3:
+     print(f"Skipping {company_id} - Less than 3 years Cash Flow data")
+     return False
+
+    if capital.empty:
+     print(f"Skipping {company_id} - Cashflow Intelligence missing")
+     return False
+
+    pdf_path = TEARSHEET_DIR / f"{company_id}_tearsheet.pdf"
 
     pdf = canvas.Canvas(
         str(pdf_path),
@@ -526,7 +581,12 @@ def generate_tearsheet(company_id):
     # PAGE 1 HEADER
     # ======================================================
 
-    sector = capital.iloc[0]["sector"]
+    sector = (
+    capital.iloc[0]["sector"]
+    if not capital.empty
+    else "Unknown"
+     )
+
 
     pdf.setFillColor(colors.HexColor("#0B1F3A"))
 
@@ -902,7 +962,11 @@ def generate_tearsheet(company_id):
     # CAPITAL ALLOCATION
     # ======================================================
 
-    badge = capital.iloc[0]["capital_allocation_label"]
+    badge = (
+    capital.iloc[0]["capital_allocation_label"]
+    if not capital.empty
+    else "Not Available"
+     )
 
     pdf.setFillColor(
         colors.HexColor("#1E3A8A")
@@ -1020,20 +1084,42 @@ def generate_tearsheet(company_id):
     print("=" * 60)
     print(pdf_path)
 
+    return True
 # ==========================================================
 # MAIN
 # ==========================================================
 
 if __name__ == "__main__":
 
-    test_companies = [
-    "TCS",
-    "HDFCBANK",
-    "RELIANCE",
-    "SUNPHARMA",
-    "TATASTEEL"
-]
+    skipped = []
 
-for company_id in test_companies:
-    print(f"\nGenerating {company_id}...")
-    generate_tearsheet(company_id)
+    for company_id in companies["id"]:
+
+        print(f"Generating {company_id}")
+
+        try:
+
+            success = generate_tearsheet(company_id)
+
+            if success is False:
+
+                skipped.append({
+                    "company_id": company_id,
+                    "reason": "Less than 3 years financial data"
+                })
+
+        except Exception as e:
+
+            print(f"Skipping {company_id}: {e}")
+
+            skipped.append({
+                "company_id": company_id,
+                "reason": str(e)
+            })
+
+    pd.DataFrame(skipped).to_csv(
+        OUTPUT_DIR / "skipped_tearsheets.csv",
+        index=False
+    )
+
+    print("\nBatch generation completed.")
