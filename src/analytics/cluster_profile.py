@@ -507,17 +507,27 @@ print(heatmap_path)
 # OUTLIER DETECTION
 # ==========================================================
 
-OUTLIER_FEATURES = [
+PORTFOLIO_STATS_FEATURES = [
 
     "return_on_equity_pct",
 
+    "operating_profit_margin_pct",
+
     "debt_to_equity",
+
+    "interest_coverage",
+
+    "asset_turnover",
 
     "revenue_cagr_5yr",
 
+    "pat_cagr_5yr",
+
     "free_cash_flow_cr",
 
-    "operating_profit_margin_pct"
+    "earnings_per_share",
+
+    "dividend_payout_ratio_pct"
 
 ]
 
@@ -531,7 +541,7 @@ for sector in profile_df["broad_sector"].dropna().unique():
 
     ].copy()
 
-    for metric in OUTLIER_FEATURES:
+    for metric in PORTFOLIO_STATS_FEATURES:
 
         if sector_df[metric].std() == 0:
 
@@ -595,7 +605,7 @@ print(outlier_path)
 
 stats = []
 
-for metric in OUTLIER_FEATURES:
+for metric in PORTFOLIO_STATS_FEATURES:
 
     values = profile_df[metric].dropna()
 
