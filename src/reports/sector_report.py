@@ -228,11 +228,14 @@ def generate_sector_report(sector_name):
 
     y = 540
 
-    pdf.drawString(40, y, "Company")
-    pdf.drawString(210, y, "ROE")
-    pdf.drawString(260, y, "D/E")
-    pdf.drawString(320, y, "Rev CAGR")
-    pdf.drawString(420, y, "PAT CAGR")
+    pdf.drawString(20, y, "Company")
+    pdf.drawString(170, y, "ROE")
+    pdf.drawString(215, y, "D/E")
+    pdf.drawString(255, y, "Rev")
+    pdf.drawString(305, y, "PAT")
+    pdf.drawString(355, y, "NPM")
+    pdf.drawString(410, y, "OPM")
+    pdf.drawString(470, y, "Quality")
     pdf.line(
     40,
     y - 5,
@@ -250,34 +253,83 @@ def generate_sector_report(sector_name):
     for _, row in company_table.iterrows():
 
         pdf.drawString(
-            40,
+            20,
             y,
-            str(row["company_name"])[:28]
+            str(row["company_name"])[:32]
         )
 
         pdf.drawRightString(
-            240,
+            190,
             y,
             f"{row['return_on_equity_pct']:.1f}"
         )
 
         pdf.drawRightString(
-            290,
+            235,
             y,
             f"{row['debt_to_equity']:.2f}"
         )
 
+        revenue = (
+        "-"
+        if pd.isna(row["revenue_cagr_5yr"])
+        else f"{row['revenue_cagr_5yr']:.1f}%"
+         )
+
         pdf.drawRightString(
-            390,
-            y,
-            f"{row['revenue_cagr_5yr']:.1f}%"
+        290,
+         y,
+         revenue
+        )
+
+        pat = (
+        "-"
+        if pd.isna(row["pat_cagr_5yr"])
+        else f"{row['pat_cagr_5yr']:.1f}%"
+         )
+
+        pdf.drawRightString(
+        340,
+        y,
+        pat
         )
 
         pdf.drawRightString(
-            520,
+            395,
             y,
-            f"{row['pat_cagr_5yr']:.1f}%"
+            f"{row['net_profit_margin_pct']:.1f}%"
         )
+
+        opm = row["operating_profit_margin_pct"]
+
+        if pd.isna(opm):
+
+         opm_text = "-"
+
+        elif abs(opm) > 1000:
+
+         opm_text = f"{opm / 100:.1f}%"
+
+        else:
+
+         opm_text = f"{opm:.1f}%"
+
+        pdf.drawRightString(
+        455,
+        y,
+        opm_text
+     )
+        quality = (
+        "-"
+        if pd.isna(row["composite_quality_score"])
+        else f"{row['composite_quality_score']:.1f}"
+        )
+
+        pdf.drawRightString(
+        540,
+        y,
+        quality
+         )
 
         y -= 18
 
