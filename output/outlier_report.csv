@@ -1,0 +1,8 @@
+company_id,company_name,sector,metric,value,z_score
+ADANIGREEN,Adani Green Energy Ltd,Energy,debt_to_equity,6.5953,3.146319115853084
+ADANIGREEN,Adani Green Energy Ltd,Energy,revenue_cagr_5yr,51.55676088829046,3.0948696968795852
+INDIGO,Interglobe Aviation Ltd,Consumer Discretionary,return_on_equity_pct,892.57,3.6029633004686246
+TATAMOTORS,Tata Motors Ltd,Consumer Discretionary,free_cash_flow_cr,45133.0,3.3508028753585486
+INDIGO,Interglobe Aviation Ltd,Consumer Discretionary,operating_profit_margin_pct,16331.0,3.427000889067984
+PNB,Punjab National Bank,Financials,return_on_equity_pct,61.31999999999999,3.3257902040768976
+HDFCBANK,HDFC Bank Ltd,Financials,operating_profit_margin_pct,-44685.0,-3.613912409610131
