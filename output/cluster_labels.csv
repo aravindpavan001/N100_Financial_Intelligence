@@ -1,0 +1,91 @@
+company_id,company_name,sector,cluster_id,cluster_name,distance_from_centroid
+ABB,Abbott India Ltd,Industrials,2,Cluster 2,0.58404829
+ADANIENSOL,Adani Energy Solutions Ltd,Energy,0,Cluster 0,0.959758707
+ADANIENT,Adani Enterprises Ltd,Industrials,0,Cluster 0,0.937331124
+ADANIGREEN,Adani Green Energy Ltd,Energy,1,Cluster 1,4.123366845
+ADANIPORTS,Adani Ports & Special Economic Zone Ltd,Industrials,2,Cluster 2,0.682440516
+ADANIPOWER,Adani Power Ltd,Energy,2,Cluster 2,0.971346664
+AMBUJACEM,Ambuja Cements Ltd,Materials,2,Cluster 2,0.645312381
+APOLLOHOSP,Apollo Hospitals Chain of Indian private hospitals,Healthcare,2,Cluster 2,0.104368138
+ASIANPAINT,Asian Paints Indian Multi-National Paint and Coating Manufacturing Company,Materials,2,Cluster 2,0.653906797
+AXISBANK,Axis Bank Ltd,Financials,4,Cluster 4,2.473414168
+BAJAJ-AUTO,Bajaj Auto Ltd,Consumer Discretionary,0,Cluster 0,0.375013134
+BAJAJFINSV,Bajaj Finserv Ltd,Financials,1,Cluster 1,1.028816154
+BAJAJHLDNG,Bajaj Holdings & Investment Ltd,Financials,2,Cluster 2,0.256561815
+BAJFINANCE,Bajaj Finance Ltd,Financials,1,Cluster 1,2.243076153
+BANKBARODA,Bank of Baroda,Financials,4,Cluster 4,2.024150234
+BEL,Bharat Electronics Ltd,Industrials,3,Cluster 3,0.785753411
+BHARTIARTL,Bharti Airtel Ltd,Communication Services,0,Cluster 0,1.085899218
+BHEL,Bharat Heavy Electricals Limited,Industrials,0,Cluster 0,1.982224986
+BOSCHLTD,Bosch Ltd,Consumer Discretionary,0,Cluster 0,0.538724455
+BPCL,Bharat Petroleum Corporation Ltd,Energy,0,Cluster 0,0.750834022
+BRITANNIA,Britannia Industries Ltd,Consumer Staples,0,Cluster 0,0.513811955
+CANBK,Canara Bank,Financials,4,Cluster 4,2.320758211
+CHOLAFIN,Cholamandalam Investment & Finance Company Ltd,Financials,1,Cluster 1,1.331182017
+CIPLA,Cipla Ltd,Healthcare,0,Cluster 0,0.79798903
+COALINDIA,Coal India Ltd,Materials,0,Cluster 0,5.416041215
+DABUR,Dabur India Ltd,Consumer Staples,0,Cluster 0,0.522498603
+DIVISLAB,Divis Laboratories Ltd,Healthcare,2,Cluster 2,0.548256073
+DLF,DLF Ltd,Real Estate,0,Cluster 0,1.352419554
+DMART,Avenue Supermarts Ltd,Consumer Discretionary,2,Cluster 2,1.671099672
+DRREDDY,Dr Reddys Laboratories Ltd,Healthcare,0,Cluster 0,0.546947574
+EICHERMOT,Eicher Motors Ltd,Consumer Discretionary,0,Cluster 0,0.57669769
+GAIL,GAIL (India) Ltd,Energy,0,Cluster 0,0.463383031
+GODREJCP,Godrej Consumer Products Ltd,Consumer Staples,0,Cluster 0,0.587523332
+GRASIM,Grasim Industries Ltd,Industrials,2,Cluster 2,1.475431961
+HAL,Hindustan Aeronautics Ltd,Industrials,3,Cluster 3,0.785753411
+HAVELLS,Havells India Ltd,Industrials,0,Cluster 0,0.596254112
+HCLTECH,HCL Technologies Ltd,Information Technology,2,Cluster 2,0.784063297
+HDFCBANK,HDFC Bank Ltd,Financials,4,Cluster 4,4.708141727
+HDFCLIFE,HDFC Life Insurance Company Ltd,Financials,2,Cluster 2,0.552162913
+HEROMOTOCO,Hero MotoCorp Ltd,Consumer Discretionary,0,Cluster 0,0.668232479
+HINDALCO,Hindalco Industries Ltd,Materials,0,Cluster 0,2.564503301
+HINDUNILVR,Hindustan Unilever Ltd,Consumer Staples,0,Cluster 0,1.468932399
+ICICIBANK,ICICI Bank Ltd,Financials,4,Cluster 4,1.166360907
+ICICIGI,ICICI Lombard General Insurance Company Ltd,Financials,2,Cluster 2,0.336511589
+ICICIPRULI,ICICI Prudential Life Insurance Company Ltd,Financials,2,Cluster 2,0.395704567
+INDIGO,Interglobe Aviation Ltd,Consumer Discretionary,2,Cluster 2,2.412437555
+INDUSINDBK,IndusInd Bank Ltd,Financials,4,Cluster 4,1.748555039
+INFY,Infosys Ltd,Information Technology,0,Cluster 0,0.936397121
+IOC,Indian Oil Corporation,Energy,0,Cluster 0,1.347746047
+IRCTC,Indian Railway Catering & Tourism Corporation Ltd,Consumer Discretionary,2,Cluster 2,0.255832808
+IRFC,Indian Railway Finance Corporation Ltd,Financials,4,Cluster 4,0.928709958
+ITC,ITC Ltd,Consumer Staples,0,Cluster 0,0.507393716
+JINDALSTEL,Jindal Steel & Power Ltd,Materials,0,Cluster 0,0.648771631
+JIOFIN,Jio Financial Services Ltd,Financials,2,Cluster 2,0.251727411
+JSWENERGY,JSW Energy Ltd,Energy,0,Cluster 0,0.966279549
+JSWSTEEL,JSW Steel Ltd,Materials,2,Cluster 2,0.263309851
+KOTAKBANK,Kotak Mahindra Bank Ltd,Financials,4,Cluster 4,1.718005339
+LICI,Life Insurance Corporation of India,Financials,0,Cluster 0,0.547859788
+LODHA,Macrotech Developers Ltd,Real Estate,2,Cluster 2,0.161585419
+LT,Larsen & Toubro Ltd,Industrials,0,Cluster 0,0.697117443
+LTIM,LTIMindtree Ltd,Information Technology,2,Cluster 2,0.901026706
+M&M,Mahindra & Mahindra Ltd,Consumer Discretionary,0,Cluster 0,1.041269275
+MARUTI,Maruti Suzuki India Ltd,Consumer Discretionary,0,Cluster 0,0.668222241
+MOTHERSON,Samvardhana Motherson International Ltd,Consumer Discretionary,2,Cluster 2,0.412158161
+NAUKRI,Info Edge (India) Ltd,Communication Services,2,Cluster 2,0.252168372
+NESTLEIND,Nestle India Ltd,Consumer Staples,0,Cluster 0,0.552766158
+NHPC,NHPC Ltd,Energy,0,Cluster 0,0.697063159
+NTPC,NTPC Ltd,Energy,0,Cluster 0,0.461930621
+ONGC,Oil & Natural Gas Corpn Ltd,Energy,0,Cluster 0,1.57075198
+PFC,Power Finance Corporation Ltd,Financials,1,Cluster 1,2.356752056
+PIDILITIND,Pidilite Industries Ltd,Materials,2,Cluster 2,0.647186445
+PNB,Punjab National Bank,Financials,2,Cluster 2,1.91549322
+POWERGRID,Power Grid Corporation of India Ltd,Energy,0,Cluster 0,0.970879023
+RECLTD,REC Ltd,Financials,1,Cluster 1,1.993804492
+RELIANCE,Reliance Industries Ltd,Energy,0,Cluster 0,1.537034974
+SBILIFE,SBI Life Insurance Company Ltd,Financials,2,Cluster 2,0.850757387
+SHREECEM,Shree Cement Ltd,Materials,2,Cluster 2,0.5009398
+SHRIRAMFIN,Shriram Finance Ltd,Financials,2,Cluster 2,1.76999712
+SIEMENS,Siemens Ltd,Industrials,0,Cluster 0,0.565075399
+SUNPHARMA,Sun Pharmaceuticals Industries Ltd,Healthcare,2,Cluster 2,0.611691283
+TATACONSUM,Tata Consumer Products Ltd,Consumer Staples,0,Cluster 0,0.54486499
+TATAMOTORS,Tata Motors Ltd,Consumer Discretionary,0,Cluster 0,1.553369715
+TATAPOWER,Tata Power Company Ltd,Energy,0,Cluster 0,0.594174192
+TATASTEEL,Tata Steel Ltd,Materials,0,Cluster 0,0.4926923
+TCS,Tata Consultancy Services Ltd,Information Technology,0,Cluster 0,1.927533865
+TECHM,Tech Mahindra Ltd,Information Technology,2,Cluster 2,0.656361088
+TITAN,Titan Company Ltd,Consumer Discretionary,2,Cluster 2,0.369344358
+TORNTPHARM,Torrent Pharmaceuticals Ltd,Healthcare,2,Cluster 2,0.635615141
+TRENT,Trent Ltd,Consumer Discretionary,2,Cluster 2,0.213293791
+TVSMOTOR,TVS Motor Company Ltd,Consumer Discretionary,2,Cluster 2,1.11769432
