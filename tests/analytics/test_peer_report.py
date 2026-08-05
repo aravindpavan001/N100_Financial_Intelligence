@@ -7,39 +7,26 @@ from src.analytics.peer import PEER_OUTPUT
 
 def test_peer_report_exists():
 
-    assert os.path.exists(
-        PEER_OUTPUT
-    )
+    assert os.path.exists(PEER_OUTPUT)
 
 
 def test_workbook_has_sheets():
 
-    wb = load_workbook(
-        PEER_OUTPUT
-    )
+    wb = load_workbook(PEER_OUTPUT)
 
-    assert len(
-        wb.sheetnames
-    ) == 11
+    assert len(wb.sheetnames) == 11
 
 
 def test_private_banks_sheet_exists():
 
-    wb = load_workbook(
-        PEER_OUTPUT
-    )
+    wb = load_workbook(PEER_OUTPUT)
 
-    assert (
-        "Private Banks"
-        in wb.sheetnames
-    )
+    assert "Private Banks" in wb.sheetnames
 
 
 def test_benchmark_row_exists():
 
-    wb = load_workbook(
-        PEER_OUTPUT
-    )
+    wb = load_workbook(PEER_OUTPUT)
 
     ws = wb["Private Banks"]
 
@@ -60,9 +47,7 @@ def test_benchmark_row_exists():
 
 def test_median_row_exists():
 
-    wb = load_workbook(
-        PEER_OUTPUT
-    )
+    wb = load_workbook(PEER_OUTPUT)
 
     ws = wb["Private Banks"]
 

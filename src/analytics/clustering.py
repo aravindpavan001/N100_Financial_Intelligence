@@ -1,11 +1,10 @@
 import sqlite3
 from pathlib import Path
 
-import pandas as pd
 import matplotlib.pyplot as plt
-
-from sklearn.preprocessing import StandardScaler
+import pandas as pd
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 
 # ==========================================================
 # PROJECT PATHS
@@ -19,15 +18,9 @@ OUTPUT_DIR = BASE_DIR / "output"
 
 REPORT_DIR = BASE_DIR / "reports"
 
-OUTPUT_DIR.mkdir(
-    parents=True,
-    exist_ok=True
-)
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-REPORT_DIR.mkdir(
-    parents=True,
-    exist_ok=True
-)
+REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ==========================================================
 # DATABASE
@@ -35,20 +28,11 @@ REPORT_DIR.mkdir(
 
 conn = sqlite3.connect(DB_PATH)
 
-companies = pd.read_sql(
-    "SELECT * FROM companies",
-    conn
-)
+companies = pd.read_sql("SELECT * FROM companies", conn)
 
-financial_ratios = pd.read_sql(
-    "SELECT * FROM financial_ratios",
-    conn
-)
+financial_ratios = pd.read_sql("SELECT * FROM financial_ratios", conn)
 
-sectors = pd.read_sql(
-    "SELECT * FROM sectors",
-    conn
-)
+sectors = pd.read_sql("SELECT * FROM sectors", conn)
 
 conn.close()
 
@@ -57,17 +41,10 @@ conn.close()
 # ==========================================================
 
 latest_ratios = (
-
-    financial_ratios
-
-    .sort_values("year")
-
+    financial_ratios.sort_values("year")
     .groupby("company_id")
-
     .tail(1)
-
     .reset_index(drop=True)
-
 )
 
 print()
@@ -83,36 +60,11 @@ print(len(latest_ratios))
 # ==========================================================
 
 cluster_df = latest_ratios.merge(
-
-    sectors[
-        [
-            "company_id",
-            "broad_sector",
-            "sub_sector"
-        ]
-    ],
-
-    on="company_id",
-
-    how="left"
-
+    sectors[["company_id", "broad_sector", "sub_sector"]], on="company_id", how="left"
 )
 
 cluster_df = cluster_df.merge(
-
-    companies[
-        [
-            "id",
-            "company_name"
-        ]
-    ],
-
-    left_on="company_id",
-
-    right_on="id",
-
-    how="left"
-
+    companies[["id", "company_name"]], left_on="company_id", right_on="id", how="left"
 )
 
 print()
@@ -128,17 +80,11 @@ print(cluster_df.head())
 # ==========================================================
 
 FEATURES = [
-
     "return_on_equity_pct",
-
     "debt_to_equity",
-
     "revenue_cagr_5yr",
-
     "free_cash_flow_cr",
-
-    "operating_profit_margin_pct"
-
+    "operating_profit_margin_pct",
 ]
 
 print()
@@ -162,29 +108,14 @@ for feature in FEATURES:
 # ==========================================================
 
 feature_df = cluster_df[
-
-    [
-        "company_id",
-        "company_name",
-        "broad_sector"
-    ]
-
-    +
-
-    FEATURES
-
+    ["company_id", "company_name", "broad_sector"] + FEATURES
 ].copy()
 
 feature_df["company_name"] = (
-
     feature_df["company_name"]
-
     .astype(str)
-
     .str.replace("\n", " ", regex=False)
-
     .str.strip()
-
 )
 
 # ==========================================================
@@ -197,15 +128,7 @@ print("=" * 60)
 print("MISSING VALUES BEFORE")
 print("=" * 60)
 
-print(
-
-    feature_df[FEATURES]
-
-    .isna()
-
-    .sum()
-
-)
+print(feature_df[FEATURES].isna().sum())
 
 # ==========================================================
 # SECTOR MEDIAN IMPUTATION
@@ -213,24 +136,8 @@ print(
 
 for feature in FEATURES:
 
-    feature_df[feature] = (
-
-        feature_df
-
-        .groupby("broad_sector")[feature]
-
-        .transform(
-
-            lambda x:
-
-            x.fillna(
-
-                x.median()
-
-            )
-
-        )
-
+    feature_df[feature] = feature_df.groupby("broad_sector")[feature].transform(
+        lambda x: x.fillna(x.median())
     )
 
 # ==========================================================
@@ -239,17 +146,7 @@ for feature in FEATURES:
 
 for feature in FEATURES:
 
-    feature_df[feature] = (
-
-        feature_df[feature]
-
-        .fillna(
-
-            feature_df[feature].median()
-
-        )
-
-    )
+    feature_df[feature] = feature_df[feature].fillna(feature_df[feature].median())
 
 # ==========================================================
 # VERIFY
@@ -261,15 +158,7 @@ print("=" * 60)
 print("MISSING VALUES AFTER")
 print("=" * 60)
 
-print(
-
-    feature_df[FEATURES]
-
-    .isna()
-
-    .sum()
-
-)
+print(feature_df[FEATURES].isna().sum())
 
 print()
 
@@ -306,11 +195,7 @@ k_values = range(2, 11)
 
 for k in k_values:
 
-    model = KMeans(
-        n_clusters=k,
-        random_state=42,
-        n_init=10
-    )
+    model = KMeans(n_clusters=k, random_state=42, n_init=10)
 
     model.fit(X_scaled)
 
@@ -318,12 +203,7 @@ for k in k_values:
 
 plt.figure(figsize=(8, 5))
 
-plt.plot(
-    list(k_values),
-    inertia,
-    marker="o",
-    linewidth=2
-)
+plt.plot(list(k_values), inertia, marker="o", linewidth=2)
 
 plt.title("KMeans Elbow Plot")
 
@@ -337,10 +217,7 @@ plt.tight_layout()
 
 elbow_path = REPORT_DIR / "elbow_plot.png"
 
-plt.savefig(
-    elbow_path,
-    dpi=200
-)
+plt.savefig(elbow_path, dpi=200)
 
 plt.close()
 
@@ -356,11 +233,7 @@ print(elbow_path)
 # FINAL KMEANS MODEL
 # ==========================================================
 
-kmeans = KMeans(
-    n_clusters=5,
-    random_state=42,
-    n_init=10
-)
+kmeans = KMeans(n_clusters=5, random_state=42, n_init=10)
 
 cluster_ids = kmeans.fit_predict(X_scaled)
 
@@ -374,61 +247,36 @@ distance_from_centroid = []
 
 for i in range(len(cluster_ids)):
 
-    distance_from_centroid.append(
-
-        distances[i][cluster_ids[i]]
-
-    )
+    distance_from_centroid.append(distances[i][cluster_ids[i]])
 
 # ==========================================================
 # BUILD OUTPUT
 # ==========================================================
 
 cluster_names = {
-
     0: "Cluster 0",
-
     1: "Cluster 1",
-
     2: "Cluster 2",
-
     3: "Cluster 3",
-
-    4: "Cluster 4"
-
+    4: "Cluster 4",
 }
 
-cluster_labels = pd.DataFrame({
-
-    "company_id": feature_df["company_id"],
-
-    "company_name": feature_df["company_name"],
-
-    "sector": feature_df["broad_sector"],
-
-    "cluster_id": cluster_ids,
-
-    "cluster_name": [
-
-        cluster_names[x]
-
-        for x in cluster_ids
-
-    ],
-
-    "distance_from_centroid": distance_from_centroid
-
-})
+cluster_labels = pd.DataFrame(
+    {
+        "company_id": feature_df["company_id"],
+        "company_name": feature_df["company_name"],
+        "sector": feature_df["broad_sector"],
+        "cluster_id": cluster_ids,
+        "cluster_name": [cluster_names[x] for x in cluster_ids],
+        "distance_from_centroid": distance_from_centroid,
+    }
+)
 
 # ==========================================================
 # SORT OUTPUT
 # ==========================================================
 
-cluster_labels = cluster_labels.sort_values(
-
-    "company_id"
-
-).reset_index(drop=True)
+cluster_labels = cluster_labels.sort_values("company_id").reset_index(drop=True)
 
 # ==========================================================
 # SAVE CSV
@@ -436,13 +284,7 @@ cluster_labels = cluster_labels.sort_values(
 
 csv_path = OUTPUT_DIR / "cluster_labels.csv"
 
-cluster_labels.to_csv(
-
-    csv_path,
-
-    index=False
-
-)
+cluster_labels.to_csv(csv_path, index=False)
 
 print()
 
@@ -472,55 +314,25 @@ print()
 
 print("Cluster Counts")
 
-print(
-
-    cluster_labels["cluster_id"]
-
-    .value_counts()
-
-    .sort_index()
-
-)
+print(cluster_labels["cluster_id"].value_counts().sort_index())
 
 print()
 
 print("Missing Values")
 
-print(
-
-    cluster_labels
-
-    .isna()
-
-    .sum()
-
-)
+print(cluster_labels.isna().sum())
 
 print()
 
 print("Unique Clusters")
 
-print(
-
-    sorted(
-
-        cluster_labels["cluster_id"].unique()
-
-    )
-
-)
+print(sorted(cluster_labels["cluster_id"].unique()))
 
 print()
 
 print("Companies Per Cluster")
 
-print(
-
-    cluster_labels["cluster_id"]
-
-    .value_counts()
-
-)
+print(cluster_labels["cluster_id"].value_counts())
 
 print()
 
@@ -528,11 +340,7 @@ print("=" * 60)
 print("SAMPLE OUTPUT")
 print("=" * 60)
 
-print(
-
-    cluster_labels.head(10)
-
-)
+print(cluster_labels.head(10))
 
 # ==========================================================
 # MAIN
@@ -554,4 +362,4 @@ if __name__ == "__main__":
 
     print(elbow_path)
 
-    print(csv_path)    
+    print(csv_path)

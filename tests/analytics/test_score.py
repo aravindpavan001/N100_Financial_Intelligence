@@ -1,9 +1,9 @@
 import pandas as pd
 
 from src.analytics.score import (
-    winsorize_series,
-    normalize_metric,
     calculate_composite_score,
+    normalize_metric,
+    winsorize_series,
 )
 
 
@@ -28,14 +28,14 @@ def test_normalization():
 
 def test_composite_score():
 
-    df = pd.DataFrame({
-
-        "profitability_score":[50],
-        "cash_quality_score":[50],
-        "growth_score":[50],
-        "leverage_score":[50],
-
-    })
+    df = pd.DataFrame(
+        {
+            "profitability_score": [50],
+            "cash_quality_score": [50],
+            "growth_score": [50],
+            "leverage_score": [50],
+        }
+    )
 
     df = calculate_composite_score(df)
 

@@ -1,18 +1,16 @@
 from src.analytics.ratios import (
-    calculate_net_profit_margin,
-    calculate_operating_profit_margin,
-    check_opm_difference,
-    calculate_roe,
-    calculate_roce,
-    calculate_roa,
     calculate_debt_to_equity,
-    get_high_leverage_flag,
     calculate_interest_coverage,
+    calculate_net_profit_margin,
+    calculate_roa,
+    calculate_roce,
+    calculate_roe,
+    check_opm_difference,
+    get_high_leverage_flag,
     get_icr_label,
     get_icr_warning,
-    calculate_net_debt,
-    calculate_asset_turnover,
 )
+
 
 # Test 1
 def test_net_profit_margin():
@@ -94,4 +92,4 @@ def test_interest_zero():
 def test_icr_warning():
     assert get_icr_warning(1.2) is True
     assert get_icr_warning(3) is False
-    assert get_icr_warning(None) is False    
+    assert get_icr_warning(None) is False

@@ -1,12 +1,11 @@
-import streamlit as st
 from pathlib import Path
+
 import pandas as pd
+import streamlit as st
 
 st.title("📄 Reports")
 
-st.markdown(
-    "Download all generated reports from the Financial Intelligence Engine."
-)
+st.markdown("Download all generated reports from the Financial Intelligence Engine.")
 
 
 BASE_DIR = Path(__file__).resolve().parents[3]
@@ -43,9 +42,7 @@ else:
 st.subheader("Project Statistics")
 
 try:
-    companies = pd.read_excel(
-        OUTPUT_DIR / "valuation_summary.xlsx"
-    )
+    companies = pd.read_excel(OUTPUT_DIR / "valuation_summary.xlsx")
 
 except FileNotFoundError:
     st.error("valuation_summary.xlsx not found.")
@@ -55,15 +52,9 @@ col1, col2, col3 = st.columns(3)
 
 col1.metric("Companies", len(companies))
 
-col2.metric(
-    "Premium",
-    (companies["valuation_flag"] == "Premium").sum()
-)
+col2.metric("Premium", (companies["valuation_flag"] == "Premium").sum())
 
-col3.metric(
-    "Discount",
-    (companies["valuation_flag"] == "Discount").sum()
-)
+col3.metric("Discount", (companies["valuation_flag"] == "Discount").sum())
 
 st.subheader("Valuation Distribution")
 
@@ -74,4 +65,3 @@ st.bar_chart(counts)
 st.subheader("Valuation Summary Preview")
 
 st.dataframe(companies.head(20))
-

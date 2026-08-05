@@ -1,9 +1,8 @@
 from src.analytics.cashflow_kpis import (
-    calculate_free_cash_flow,
-    calculate_cfo_quality,
     calculate_capex_intensity,
+    calculate_cfo_quality,
     calculate_fcf_conversion,
-    get_cashflow_sign,
+    calculate_free_cash_flow,
     classify_capital_allocation,
 )
 
@@ -64,52 +63,70 @@ def test_capex_intensity():
 
 # Test 7
 def test_fcf_conversion():
-    assert calculate_fcf_conversion(
-        150,
-        200,
-    ) == 75
+    assert (
+        calculate_fcf_conversion(
+            150,
+            200,
+        )
+        == 75
+    )
 
 
 # Test 8
 def test_fcf_conversion_zero_profit():
-    assert calculate_fcf_conversion(
-        150,
-        0,
-    ) is None
+    assert (
+        calculate_fcf_conversion(
+            150,
+            0,
+        )
+        is None
+    )
 
 
 # Test 9
 def test_reinvestor():
-    assert classify_capital_allocation(
-        250,
-        -140,
-        -80,
-    ) == "Reinvestor"
+    assert (
+        classify_capital_allocation(
+            250,
+            -140,
+            -80,
+        )
+        == "Reinvestor"
+    )
 
 
 # Test 10
 def test_distress_signal():
-    assert classify_capital_allocation(
-        -100,
-        50,
-        75,
-    ) == "Distress Signal"
+    assert (
+        classify_capital_allocation(
+            -100,
+            50,
+            75,
+        )
+        == "Distress Signal"
+    )
 
 
 # Test 11
 def test_cash_accumulator():
-    assert classify_capital_allocation(
-        100,
-        50,
-        75,
-    ) == "Cash Accumulator"
+    assert (
+        classify_capital_allocation(
+            100,
+            50,
+            75,
+        )
+        == "Cash Accumulator"
+    )
 
 
 # Test 12
 def test_shareholder_returns():
-    assert classify_capital_allocation(
-        300,
-        -100,
-        -50,
-        "High Quality",
-    ) == "Shareholder Returns"
+    assert (
+        classify_capital_allocation(
+            300,
+            -100,
+            -50,
+            "High Quality",
+        )
+        == "Shareholder Returns"
+    )

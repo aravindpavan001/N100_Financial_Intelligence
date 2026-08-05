@@ -1,7 +1,7 @@
 import sqlite3
-import pandas as pd
 from pathlib import Path
 
+import pandas as pd
 from cagr import calculate_cagr
 
 # ------------------------------------
@@ -25,10 +25,7 @@ ratios = pd.read_sql("SELECT * FROM financial_ratios", conn)
 # Convert year to sortable integer
 # ------------------------------------
 
-pl["year_num"] = pd.to_numeric(
-    pl["year"].str.extract(r"(\d{4})")[0],
-    errors="coerce"
-)
+pl["year_num"] = pd.to_numeric(pl["year"].str.extract(r"(\d{4})")[0], errors="coerce")
 
 pl = pl.dropna(subset=["year_num"])
 
@@ -48,9 +45,7 @@ ratios["pat_cagr_5yr"] = None
 
 for company in pl["company_id"].unique():
 
-    company_df = pl[
-        pl["company_id"] == company
-    ].sort_values("year_num")
+    company_df = pl[pl["company_id"] == company].sort_values("year_num")
 
     if len(company_df) < 5:
         continue
@@ -62,16 +57,10 @@ for company in pl["company_id"].unique():
     end_pat = company_df.iloc[-1]["net_profit"]
 
     revenue_cagr, revenue_flag = calculate_cagr(
-    start_sales,
-    end_sales,
-    len(company_df) - 1
-)
+        start_sales, end_sales, len(company_df) - 1
+    )
 
-    pat_cagr, pat_flag = calculate_cagr(
-    start_pat,
-    end_pat,
-    len(company_df) - 1
-     )
+    pat_cagr, pat_flag = calculate_cagr(start_pat, end_pat, len(company_df) - 1)
 
     latest_year = company_df.iloc[-1]["year"]
 
@@ -92,12 +81,8 @@ for company in pl["company_id"].unique():
 
     print("Latest Year  :", latest_year)
 
-    mask = (
-        (ratios["company_id"] == company)
-        &
-        (ratios["year"] == latest_year)
-        )
-    
+    mask = (ratios["company_id"] == company) & (ratios["year"] == latest_year)
+
     print("Rows Matched :", mask.sum())
 
     ratios.loc[mask, "revenue_cagr_5yr"] = revenue_cagr
@@ -107,12 +92,7 @@ for company in pl["company_id"].unique():
 # Save back to SQLite
 # ------------------------------------
 
-ratios.to_sql(
-    "financial_ratios",
-    conn,
-    if_exists="replace",
-    index=False
-)
+ratios.to_sql("financial_ratios", conn, if_exists="replace", index=False)
 
 conn.close()
 
@@ -123,11 +103,6 @@ print("=" * 50)
 print(
     ratios.loc[
         ratios["company_id"] == "ABB",
-        [
-            "company_id",
-            "year",
-            "revenue_cagr_5yr",
-            "pat_cagr_5yr"
-        ]
+        ["company_id", "year", "revenue_cagr_5yr", "pat_cagr_5yr"],
     ]
 )

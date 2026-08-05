@@ -1,5 +1,5 @@
-import pytest
 import pandas as pd
+import pytest
 
 from src.analytics.peer import (
     calculate_percentile_rank,
@@ -9,9 +9,7 @@ from src.analytics.peer import (
 
 def test_highest_roe():
 
-    df = pd.DataFrame({
-        "roe": [10, 20, 30]
-    })
+    df = pd.DataFrame({"roe": [10, 20, 30]})
 
     rank = calculate_percentile_rank(
         df,
@@ -24,9 +22,7 @@ def test_highest_roe():
 
 def test_lowest_roe():
 
-    df = pd.DataFrame({
-        "roe": [10, 20, 30]
-    })
+    df = pd.DataFrame({"roe": [10, 20, 30]})
 
     rank = calculate_percentile_rank(
         df,
@@ -39,9 +35,7 @@ def test_lowest_roe():
 
 def test_lowest_de():
 
-    df = pd.DataFrame({
-        "de": [0.2, 1, 2]
-    })
+    df = pd.DataFrame({"de": [0.2, 1, 2]})
 
     rank = calculate_percentile_rank(
         df,
@@ -54,9 +48,7 @@ def test_lowest_de():
 
 def test_highest_de():
 
-    df = pd.DataFrame({
-        "de": [0.2, 1, 2]
-    })
+    df = pd.DataFrame({"de": [0.2, 1, 2]})
 
     rank = calculate_percentile_rank(
         df,
@@ -69,9 +61,7 @@ def test_highest_de():
 
 def test_percentile_between_0_and_100():
 
-    df = pd.DataFrame({
-        "roe": [5, 10, 20]
-    })
+    df = pd.DataFrame({"roe": [5, 10, 20]})
 
     rank = calculate_percentile_rank(
         df,
@@ -85,23 +75,20 @@ def test_percentile_between_0_and_100():
 
 def test_merge():
 
-    peer = pd.DataFrame({
+    peer = pd.DataFrame(
+        {
+            "company_id": ["A"],
+            "peer_group_name": ["IT"],
+        }
+    )
 
-        "company_id": ["A"],
-
-        "peer_group_name": ["IT"],
-
-    })
-
-    ratio = pd.DataFrame({
-
-        "company_id": ["A"],
-
-        "year": [2024],
-
-        "return_on_equity_pct": [20],
-
-    })
+    ratio = pd.DataFrame(
+        {
+            "company_id": ["A"],
+            "year": [2024],
+            "return_on_equity_pct": [20],
+        }
+    )
 
     merged = merge_peer_data(
         peer,
@@ -114,23 +101,20 @@ def test_merge():
 
 def test_output_columns():
 
-    peer = pd.DataFrame({
+    peer = pd.DataFrame(
+        {
+            "company_id": ["A"],
+            "peer_group_name": ["IT"],
+        }
+    )
 
-        "company_id": ["A"],
-
-        "peer_group_name": ["IT"],
-
-    })
-
-    ratio = pd.DataFrame({
-
-        "company_id": ["A"],
-
-        "year": [2024],
-
-        "return_on_equity_pct": [20],
-
-    })
+    ratio = pd.DataFrame(
+        {
+            "company_id": ["A"],
+            "year": [2024],
+            "return_on_equity_pct": [20],
+        }
+    )
 
     merged = merge_peer_data(
         peer,

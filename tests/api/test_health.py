@@ -4,6 +4,7 @@ from src.api.main import app
 
 client = TestClient(app)
 
+
 def test_health_status():
 
     response = client.get("/api/v1/health")
@@ -37,27 +38,16 @@ def test_db_counts_exist():
     data = client.get("/api/v1/health").json()
 
     tables = [
-
         "companies",
-
         "analysis",
-
         "balancesheet",
-
         "cashflow",
-
         "financial_ratios",
-
         "market_cap",
-
         "peer_groups",
-
         "profitandloss",
-
         "sectors",
-
-        "stock_prices"
-
+        "stock_prices",
     ]
 
     for table in tables:

@@ -4,6 +4,7 @@ from src.api.main import app
 
 client = TestClient(app)
 
+
 def test_screener_status():
 
     response = client.get("/api/v1/screener")
@@ -13,11 +14,7 @@ def test_screener_status():
 
 def test_min_roe_filter():
 
-    data = client.get(
-
-        "/api/v1/screener?min_roe=15"
-
-    ).json()
+    data = client.get("/api/v1/screener?min_roe=15").json()
 
     for row in data:
 
@@ -26,11 +23,7 @@ def test_min_roe_filter():
 
 def test_sector_filter():
 
-    data = client.get(
-
-        "/api/v1/screener?sector=Financials"
-
-    ).json()
+    data = client.get("/api/v1/screener?sector=Financials").json()
 
     for row in data:
 
@@ -39,10 +32,6 @@ def test_sector_filter():
 
 def test_invalid_parameter():
 
-    response = client.get(
+    response = client.get("/api/v1/screener?min_roe=abc")
 
-        "/api/v1/screener?min_roe=abc"
-
-    )
-
-    assert response.status_code in [400,422]
+    assert response.status_code in [400, 422]

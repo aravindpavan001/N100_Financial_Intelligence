@@ -1,23 +1,22 @@
-import yaml
-import pandas as pd
 import os
+
+import pandas as pd
+import yaml
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
 
-from src.screener.engine import (
-    apply_filters,
-    load_financial_ratios,
-    DB_PATH,
-)
-
 from src.analytics.score import (
-    calculate_profitability_score,
     calculate_cash_quality_score,
+    calculate_composite_score,
     calculate_growth_score,
     calculate_leverage_score,
-    calculate_composite_score,
+    calculate_profitability_score,
 )
-
+from src.screener.engine import (
+    DB_PATH,
+    apply_filters,
+    load_financial_ratios,
+)
 
 PRESET_PATH = "config/presets.yaml"
 
@@ -47,13 +46,9 @@ def run_preset(
 ):
 
     if preset_name not in presets:
-        raise KeyError(
-            f"Preset '{preset_name}' not found."
-        )
+        raise KeyError(f"Preset '{preset_name}' not found.")
 
-    filters = {
-        "filters": presets[preset_name]
-    }
+    filters = {"filters": presets[preset_name]}
 
     result = apply_filters(
         df,
@@ -62,10 +57,10 @@ def run_preset(
 
     if "composite_quality_score" in result.columns:
 
-     result = result.sort_values(
-        "composite_quality_score",
-        ascending=False,
-    )
+        result = result.sort_values(
+            "composite_quality_score",
+            ascending=False,
+        )
 
     return result
 
@@ -88,12 +83,11 @@ if __name__ == "__main__":
     df = calculate_leverage_score(df)
 
     df = calculate_composite_score(df)
-     
-     
+
     writer = pd.ExcelWriter(
-      OUTPUT_FILE,
-      engine="openpyxl",
-     )
+        OUTPUT_FILE,
+        engine="openpyxl",
+    )
     print("=" * 70)
     print("PRESET RESULTS")
     print("=" * 70)
@@ -127,11 +121,8 @@ if __name__ == "__main__":
 
         print("-" * 70)
 
-        print(
-            f"{preset_name:<25} : {len(result)} companies"
-        )
+        print(f"{preset_name:<25} : {len(result)} companies")
 
-        
     writer.close()
 
     wb = load_workbook(
@@ -169,10 +160,7 @@ if __name__ == "__main__":
                     column=roe_col,
                 )
 
-                if (
-                    cell.value is not None
-                    and cell.value >= 15
-                ):
+                if cell.value is not None and cell.value >= 15:
                     cell.fill = green
                 else:
                     cell.fill = red
@@ -191,13 +179,10 @@ if __name__ == "__main__":
                     column=de_col,
                 )
 
-                if (
-                    cell.value is not None
-                    and cell.value <= 1
-                ):
+                if cell.value is not None and cell.value <= 1:
                     cell.fill = green
                 else:
-                    cell.fill = red           
+                    cell.fill = red
 
     wb.save(
         OUTPUT_FILE,

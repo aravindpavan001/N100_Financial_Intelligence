@@ -1,0 +1,16 @@
+rule_id,severity,table_name,message
+DQ-02,CRITICAL,balancesheet,87 duplicate company-year rows
+DQ-02,CRITICAL,cashflow,23 duplicate company-year rows
+DQ-02,CRITICAL,financial_ratios,119 duplicate company-year rows
+DQ-02,CRITICAL,profitandloss,13 duplicate company-year rows
+DQ-03,CRITICAL,analysis,4 invalid company ids
+DQ-03,CRITICAL,balancesheet,85 invalid company ids
+DQ-03,CRITICAL,cashflow,96 invalid company ids
+DQ-03,CRITICAL,financial_ratios,24 invalid company ids
+DQ-03,CRITICAL,profitandloss,99 invalid company ids
+DQ-05,WARNING,profitandloss,234 OPM mismatch
+DQ-06,WARNING,profitandloss,1 non-positive sales
+DQ-07,WARNING,profitandloss,68 invalid tax rates
+DQ-08,WARNING,profitandloss,5 missing EPS
+DQ-12,WARNING,companies,1 invalid website URLs
+DQ-13,WARNING,cashflow,2 missing net cash flow

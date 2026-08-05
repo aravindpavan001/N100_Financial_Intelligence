@@ -1,13 +1,11 @@
 import os
 import sqlite3
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-
-from openpyxl.styles import PatternFill
 from openpyxl import load_workbook
-
+from openpyxl.styles import PatternFill
 
 # =====================================================
 # PATHS
@@ -36,29 +34,21 @@ os.makedirs(
 # =====================================================
 
 RADAR_METRICS = [
-
     "return_on_equity_pct",
-
     "operating_profit_margin_pct",
-
     "net_profit_margin_pct",
-
     "debt_to_equity",
-
     "free_cash_flow_cr",
-
     "pat_cagr_5yr",
-
     "revenue_cagr_5yr",
-
     "composite_quality_score",
-
 ]
 
 
 # =====================================================
 # LOAD SQLITE TABLES
 # =====================================================
+
 
 def load_peer_groups(db_path):
 
@@ -101,6 +91,7 @@ def load_peer_percentiles(db_path):
 
     return df
 
+
 def prepare_peer_report_data(
     db_path,
 ):
@@ -134,6 +125,7 @@ def prepare_peer_report_data(
 
     return merged
 
+
 def pivot_percentiles(
     percentile_df,
 ):
@@ -151,6 +143,7 @@ def pivot_percentiles(
     pivot = pivot.reset_index()
 
     return pivot
+
 
 def create_final_peer_report(
     db_path,
@@ -187,18 +180,15 @@ def create_final_peer_report(
         ],
         how="left",
     )
-    
-    report_df = report_df.sort_values(
-    "year"
-)
+
+    report_df = report_df.sort_values("year")
 
     report_df = report_df.groupby(
-    "company_id",
-    as_index=False,
+        "company_id",
+        as_index=False,
     ).tail(1)
-    
-    return report_df
 
+    return report_df
 
 
 def export_peer_report(
@@ -210,17 +200,11 @@ def export_peer_report(
         engine="openpyxl",
     )
 
-    peer_groups = (
-        final_df["peer_group_name"]
-        .dropna()
-        .unique()
-    )
+    peer_groups = final_df["peer_group_name"].dropna().unique()
 
     for group in peer_groups:
 
-        group_df = final_df[
-            final_df["peer_group_name"] == group
-        ]
+        group_df = final_df[final_df["peer_group_name"] == group]
 
         group_df.to_excel(
             writer,
@@ -258,14 +242,9 @@ def export_peer_report(
 
         ws = wb[sheet]
 
-        headers = [
-            cell.value
-            for cell in ws[1]
-        ]
+        headers = [cell.value for cell in ws[1]]
 
-        benchmark_col = headers.index(
-            "is_benchmark"
-        ) + 1
+        benchmark_col = headers.index("is_benchmark") + 1
 
         percentile_columns = []
 
@@ -274,10 +253,7 @@ def export_peer_report(
             start=1,
         ):
 
-            if (
-                header is not None
-                and header.endswith("_y")
-            ):
+            if header is not None and header.endswith("_y"):
 
                 percentile_columns.append(i)
 
@@ -290,10 +266,13 @@ def export_peer_report(
             ws.max_row + 1,
         ):
 
-            if ws.cell(
-                row=row,
-                column=benchmark_col,
-            ).value == 1:
+            if (
+                ws.cell(
+                    row=row,
+                    column=benchmark_col,
+                ).value
+                == 1
+            ):
 
                 for col in range(
                     1,
@@ -323,15 +302,12 @@ def export_peer_report(
 
                 value = cell.value
 
-                if (
-                    value is None
-                    or not isinstance(
-                        value,
-                        (
-                            int,
-                            float,
-                        ),
-                    )
+                if value is None or not isinstance(
+                    value,
+                    (
+                        int,
+                        float,
+                    ),
                 ):
                     continue
 
@@ -393,10 +369,7 @@ def export_peer_report(
 
                 if n % 2 == 0:
 
-                    median = (
-                        values[n // 2 - 1]
-                        + values[n // 2]
-                    ) / 2
+                    median = (values[n // 2 - 1] + values[n // 2]) / 2
 
                 else:
 
@@ -417,9 +390,12 @@ def export_peer_report(
     print()
 
     print("Peer comparison workbook created.")
+
+
 # =====================================================
 # MERGE
 # =====================================================
+
 
 def merge_peer_data(
     peer_df,
@@ -427,13 +403,9 @@ def merge_peer_data(
 ):
 
     merged = peer_df.merge(
-
         ratio_df,
-
         on="company_id",
-
         how="left",
-
     )
 
     return merged
@@ -443,69 +415,48 @@ def merge_peer_data(
 # PERCENTILE RANK
 # =====================================================
 
+
 def calculate_percentile_rank(
-
     df,
-
     metric,
-
     higher_is_better=True,
-
 ):
 
     if higher_is_better:
 
         rank = df[metric].rank(
-
             method="average",
-
             pct=True,
-
             ascending=True,
-
         )
 
     else:
 
         rank = df[metric].rank(
-
             method="average",
-
             pct=True,
-
             ascending=False,
-
         )
 
     return rank * 100
 
 
 METRICS = {
-
     "return_on_equity_pct": True,
-
     "operating_profit_margin_pct": True,
-
     "net_profit_margin_pct": True,
-
     "debt_to_equity": False,
-
     "free_cash_flow_cr": True,
-
     "revenue_cagr_5yr": True,
-
     "pat_cagr_5yr": True,
-
     "eps_cagr_5yr": True,
-
     "interest_coverage": True,
-
     "asset_turnover": True,
-
 }
 # =====================================================
 # CALCULATE ALL PEER PERCENTILES
 # =====================================================
+
 
 def calculate_all_percentiles(
     merged_df,
@@ -513,30 +464,17 @@ def calculate_all_percentiles(
 
     results = []
 
-    peer_groups = (
-        merged_df["peer_group_name"]
-        .dropna()
-        .unique()
-    )
+    peer_groups = merged_df["peer_group_name"].dropna().unique()
 
     for peer_group in peer_groups:
 
-        peer_data = merged_df[
-            merged_df["peer_group_name"]
-            == peer_group
-        ]
+        peer_data = merged_df[merged_df["peer_group_name"] == peer_group]
 
-        years = (
-            peer_data["year"]
-            .dropna()
-            .unique()
-        )
+        years = peer_data["year"].dropna().unique()
 
         for year in years:
 
-            year_data = peer_data[
-                peer_data["year"] == year
-            ]
+            year_data = peer_data[peer_data["year"] == year]
 
             for metric, higher_is_better in METRICS.items():
 
@@ -545,12 +483,10 @@ def calculate_all_percentiles(
 
                 temp = year_data.copy()
 
-                temp["percentile_rank"] = (
-                    calculate_percentile_rank(
-                        temp,
-                        metric,
-                        higher_is_better,
-                    )
+                temp["percentile_rank"] = calculate_percentile_rank(
+                    temp,
+                    metric,
+                    higher_is_better,
                 )
 
                 temp["metric"] = metric
@@ -558,7 +494,6 @@ def calculate_all_percentiles(
                 temp["metric_value"] = temp[metric]
 
                 results.append(
-
                     temp[
                         [
                             "company_id",
@@ -569,7 +504,6 @@ def calculate_all_percentiles(
                             "percentile_rank",
                         ]
                     ]
-
                 )
 
     final_df = pd.concat(
@@ -584,6 +518,7 @@ def calculate_all_percentiles(
 # SAVE TO SQLITE
 # =====================================================
 
+
 def save_peer_percentiles(
     df,
     db_path,
@@ -595,14 +530,11 @@ def save_peer_percentiles(
 
     cursor = conn.cursor()
 
-    cursor.execute(
-        """
+    cursor.execute("""
         DROP TABLE IF EXISTS peer_percentiles
-        """
-    )
+        """)
 
-    cursor.execute(
-        """
+    cursor.execute("""
         CREATE TABLE peer_percentiles (
 
             company_id TEXT,
@@ -618,8 +550,7 @@ def save_peer_percentiles(
             percentile_rank REAL
 
         )
-        """
-    )
+        """)
 
     df.to_sql(
         "peer_percentiles",
@@ -637,21 +568,18 @@ def save_peer_percentiles(
 # COMPANY METRICS
 # =====================================================
 
+
 def get_company_metrics(
     merged_df,
     company_id,
 ):
 
-    company = merged_df[
-        merged_df["company_id"] == company_id
-    ]
+    company = merged_df[merged_df["company_id"] == company_id]
 
     if company.empty:
         return None
 
-    company = company.sort_values(
-        "year"
-    )
+    company = company.sort_values("year")
 
     latest = company.iloc[-1]
 
@@ -660,13 +588,9 @@ def get_company_metrics(
     for metric in RADAR_METRICS:
 
         if metric in latest.index:
-            values.append(
-                latest[metric]
-            )
+            values.append(latest[metric])
         else:
-            values.append(
-                np.nan
-            )
+            values.append(np.nan)
 
     return values
 
@@ -675,15 +599,13 @@ def get_company_metrics(
 # PEER AVERAGE
 # =====================================================
 
+
 def get_peer_average(
     merged_df,
     peer_group,
 ):
 
-    peer = merged_df[
-        merged_df["peer_group_name"]
-        == peer_group
-    ]
+    peer = merged_df[merged_df["peer_group_name"] == peer_group]
 
     averages = []
 
@@ -691,17 +613,14 @@ def get_peer_average(
 
         if metric in peer.columns:
 
-            averages.append(
-                peer[metric].mean()
-            )
+            averages.append(peer[metric].mean())
 
         else:
 
-            averages.append(
-                np.nan
-            )
+            averages.append(np.nan)
 
     return averages
+
 
 def get_nifty_average(
     merged_df,
@@ -713,19 +632,19 @@ def get_nifty_average(
 
         if metric in merged_df.columns:
 
-            averages.append(
-                merged_df[metric].mean()
-            )
+            averages.append(merged_df[metric].mean())
 
         else:
 
             averages.append(np.nan)
 
-    return averages    
+    return averages
+
 
 # =====================================================
 # RADAR CHART
 # =====================================================
+
 
 def generate_radar_chart(
     company_values,
@@ -735,15 +654,9 @@ def generate_radar_chart(
     output_path,
 ):
 
-    company_values = [
-        0 if pd.isna(x) else x
-        for x in company_values
-    ]
+    company_values = [0 if pd.isna(x) else x for x in company_values]
 
-    peer_values = [
-        0 if pd.isna(x) else x
-        for x in peer_values
-    ]
+    peer_values = [0 if pd.isna(x) else x for x in peer_values]
 
     num_vars = len(labels)
 
@@ -793,9 +706,7 @@ def generate_radar_chart(
         label="Reference Average",
     )
 
-    ax.set_xticks(
-        angles[:-1]
-    )
+    ax.set_xticks(angles[:-1])
 
     ax.set_xticklabels(
         labels,
@@ -826,6 +737,7 @@ def generate_radar_chart(
 # GENERATE ALL RADAR CHARTS
 # =====================================================
 
+
 def generate_all_radar_charts(
     merged_df,
 ):
@@ -841,20 +753,14 @@ def generate_all_radar_charts(
         "Composite",
     ]
 
-    companies = (
-        merged_df["company_id"]
-        .dropna()
-        .unique()
-    )
+    companies = merged_df["company_id"].dropna().unique()
 
     created = 0
     skipped = 0
 
     for company_id in companies:
 
-        company_rows = merged_df[
-            merged_df["company_id"] == company_id
-        ]
+        company_rows = merged_df[merged_df["company_id"] == company_id]
 
         if company_rows.empty:
             skipped += 1
@@ -904,6 +810,8 @@ def generate_all_radar_charts(
     print()
 
     # =====================================================
+
+
 # MAIN
 # =====================================================
 
@@ -1016,11 +924,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     final_df = create_final_peer_report(
-    DB_PATH,
+        DB_PATH,
     )
 
     export_peer_report(
-    final_df,
+        final_df,
     )
 
     print()
@@ -1040,6 +948,3 @@ if __name__ == "__main__":
     print("=" * 60)
 
     print()
-
-
-

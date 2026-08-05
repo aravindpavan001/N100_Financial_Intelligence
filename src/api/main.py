@@ -4,162 +4,76 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.routers import (
-
-    health,
-
     companies,
-
-    screener,
-
-    sectors,
-
+    documents,
+    health,
     peers,
-
-    valuation,
-
     portfolio,
-
-    documents
-
+    screener,
+    sectors,
+    valuation,
 )
 
-app = FastAPI(
-
-    title="N100 Financial Intelligence API",
-
-    version="1.0.0"
-
-)
+app = FastAPI(title="N100 Financial Intelligence API", version="1.0.0")
 
 # ==========================================================
 # CORS
 # ==========================================================
 
 app.add_middleware(
-
     CORSMiddleware,
-
     allow_origins=["*"],
-
     allow_credentials=True,
-
     allow_methods=["*"],
-
-    allow_headers=["*"]
-
+    allow_headers=["*"],
 )
 
 # ==========================================================
 # REQUEST LOGGING
 # ==========================================================
 
-@app.middleware("http")
 
+@app.middleware("http")
 async def log_requests(request, call_next):
 
     start = time.time()
 
     response = await call_next(request)
 
-    duration = round(
-
-        (time.time() - start) * 1000,
-
-        2
-
-    )
+    duration = round((time.time() - start) * 1000, 2)
 
     print(
-
         f"{request.method}"
-
         f" {request.url.path}"
-
         f" {response.status_code}"
-
         f" {duration} ms"
-
     )
 
     return response
+
 
 # ==========================================================
 # REGISTER ROUTERS
 # ==========================================================
 
-app.include_router(
+app.include_router(health.router, prefix="/api/v1")
 
-    health.router,
+app.include_router(companies.router, prefix="/api/v1")
 
-    prefix="/api/v1"
+app.include_router(screener.router, prefix="/api/v1")
 
-)
+app.include_router(sectors.router, prefix="/api/v1")
 
-app.include_router(
+app.include_router(peers.router, prefix="/api/v1")
 
-    companies.router,
+app.include_router(valuation.router, prefix="/api/v1")
 
-    prefix="/api/v1"
+app.include_router(portfolio.router, prefix="/api/v1")
 
-)
-
-app.include_router(
-
-    screener.router,
-
-    prefix="/api/v1"
-
-)
-
-app.include_router(
-
-    sectors.router,
-
-    prefix="/api/v1"
-
-)
-
-app.include_router(
-
-    peers.router,
-
-    prefix="/api/v1"
-
-)
-
-app.include_router(
-
-    valuation.router,
-
-    prefix="/api/v1"
-
-)
-
-app.include_router(
-
-    portfolio.router,
-
-    prefix="/api/v1"
-
-)
-
-app.include_router(
-
-    documents.router,
-
-    prefix="/api/v1"
-
-)
+app.include_router(documents.router, prefix="/api/v1")
 
 
 @app.get("/")
-
 def root():
 
-    return {
-
-        "message": "N100 Financial Intelligence API",
-
-        "version": "1.0.0"
-
-    }
+    return {"message": "N100 Financial Intelligence API", "version": "1.0.0"}

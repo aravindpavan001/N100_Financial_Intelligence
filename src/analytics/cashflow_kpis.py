@@ -137,13 +137,16 @@ def classify_capital_allocation(
 
     return "Unknown"
 
+
 # =====================================================
 # DAY 31 - CASH FLOW INTELLIGENCE ENGINE
 # =====================================================
 
 import sqlite3
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
+
 pd.set_option("display.max_columns", None)
 pd.set_option("display.width", None)
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -155,30 +158,15 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 
 conn = sqlite3.connect(DB_PATH)
 
-cashflow = pd.read_sql(
-    "SELECT * FROM cashflow",
-    conn
-)
+cashflow = pd.read_sql("SELECT * FROM cashflow", conn)
 
-profitloss = pd.read_sql(
-    "SELECT * FROM profitandloss",
-    conn
-)
+profitloss = pd.read_sql("SELECT * FROM profitandloss", conn)
 
-financial_ratios = pd.read_sql(
-    "SELECT * FROM financial_ratios",
-    conn
-)
+financial_ratios = pd.read_sql("SELECT * FROM financial_ratios", conn)
 
-companies = pd.read_sql(
-    "SELECT * FROM companies",
-    conn
-)
+companies = pd.read_sql("SELECT * FROM companies", conn)
 
-sectors = pd.read_sql(
-    "SELECT * FROM sectors",
-    conn
-)
+sectors = pd.read_sql("SELECT * FROM sectors", conn)
 
 
 print("=" * 60)
@@ -217,36 +205,19 @@ print(sectors.columns.tolist())
 conn.close()
 
 
-
 # =====================================================
 # MERGE DATA
 # =====================================================
 
 df = (
-    cashflow
-    .merge(
-        profitloss,
-        on=["company_id", "year"],
-        how="left",
-        suffixes=("_cf", "_pl")
+    cashflow.merge(
+        profitloss, on=["company_id", "year"], how="left", suffixes=("_cf", "_pl")
     )
     .merge(
-        financial_ratios,
-        on=["company_id", "year"],
-        how="left",
-        suffixes=("", "_ratio")
+        financial_ratios, on=["company_id", "year"], how="left", suffixes=("", "_ratio")
     )
-    .merge(
-        companies,
-        left_on="company_id",
-        right_on="id",
-        how="left"
-    )
-    .merge(
-        sectors,
-        on="company_id",
-        how="left"
-    )
+    .merge(companies, left_on="company_id", right_on="id", how="left")
+    .merge(sectors, on="company_id", how="left")
 )
 
 print("=" * 60)
@@ -274,8 +245,7 @@ for company_id, company_df in df.groupby("company_id"):
 
     try:
         cfo_score, cfo_label = calculate_cfo_quality(
-            company_df["operating_activity"].tolist(),
-            company_df["net_profit"].tolist()
+            company_df["operating_activity"].tolist(), company_df["net_profit"].tolist()
         )
     except Exception:
         cfo_score = None
@@ -283,18 +253,13 @@ for company_id, company_df in df.groupby("company_id"):
 
     try:
         capex_pct, capex_label = calculate_capex_intensity(
-            latest["investing_activity"],
-            latest["sales"]
+            latest["investing_activity"], latest["sales"]
         )
     except Exception:
         capex_pct = None
         capex_label = None
 
-    if (
-        latest["operating_activity"] < 0
-        and
-        latest["financing_activity"] > 0
-    ):
+    if latest["operating_activity"] < 0 and latest["financing_activity"] > 0:
         distress_flag = "YES"
     else:
         distress_flag = "NO"
@@ -306,7 +271,7 @@ for company_id, company_df in df.groupby("company_id"):
 
     if len(company_df) >= 2:
 
-     previous = company_df.iloc[-2]
+        previous = company_df.iloc[-2]
 
     latest_debt = latest["total_debt_cr"]
     previous_debt = previous["total_debt_cr"]
@@ -317,47 +282,43 @@ for company_id, company_df in df.groupby("company_id"):
         and latest["financing_activity"] < 0
         and latest_debt < previous_debt
     ):
-        deleveraging_flag = "YES"    
+        deleveraging_flag = "YES"
     # -----------------------------
     # FCF Conversion
     # -----------------------------
     try:
-     fcf_conversion = calculate_fcf_conversion(
-        latest["free_cash_flow_cr"],
-        latest["operating_profit"]
-    )
+        fcf_conversion = calculate_fcf_conversion(
+            latest["free_cash_flow_cr"], latest["operating_profit"]
+        )
     except Exception:
-     fcf_conversion = None
-    
+        fcf_conversion = None
+
     # -----------------------------
-     # Capital Allocation
+    # Capital Allocation
     # -----------------------------
     capital_allocation = classify_capital_allocation(
-    latest["operating_activity"],
-    latest["investing_activity"],
-    latest["financing_activity"],
-    cfo_label
-)
+        latest["operating_activity"],
+        latest["investing_activity"],
+        latest["financing_activity"],
+        cfo_label,
+    )
     fcf_cagr_5yr = None
-    results.append({
-    "company_id": company_id,
-    "company_name": latest["company_name"],
-    "sector": latest["broad_sector"],
-
-    "cfo_quality_score": cfo_score,
-    "cfo_quality_label": cfo_label,
-
-    "capex_intensity_pct": capex_pct,
-    "capex_label": capex_label,
-
-    "fcf_cagr_5yr": fcf_cagr_5yr,
-    "fcf_conversion_pct": fcf_conversion,
-
-    "capital_allocation_label": capital_allocation,
-
-    "distress_flag": distress_flag,
-    "deleveraging_flag": deleveraging_flag,
-})
+    results.append(
+        {
+            "company_id": company_id,
+            "company_name": latest["company_name"],
+            "sector": latest["broad_sector"],
+            "cfo_quality_score": cfo_score,
+            "cfo_quality_label": cfo_label,
+            "capex_intensity_pct": capex_pct,
+            "capex_label": capex_label,
+            "fcf_cagr_5yr": fcf_cagr_5yr,
+            "fcf_conversion_pct": fcf_conversion,
+            "capital_allocation_label": capital_allocation,
+            "distress_flag": distress_flag,
+            "deleveraging_flag": deleveraging_flag,
+        }
+    )
 
 
 cashflow_intelligence = pd.DataFrame(results)
@@ -381,25 +342,15 @@ cashflow_intelligence = cashflow_intelligence[
 
 cashflow_file = OUTPUT_DIR / "cashflow_intelligence.xlsx"
 
-cashflow_intelligence.to_excel(
-    cashflow_file,
-    index=False
-)
+cashflow_intelligence.to_excel(cashflow_file, index=False)
 
 distress_alerts = cashflow_intelligence[
     cashflow_intelligence["distress_flag"] == "YES"
-][[
-    "company_id",
-    "company_name",
-    "distress_flag"
-]]
+][["company_id", "company_name", "distress_flag"]]
 
 distress_file = OUTPUT_DIR / "distress_alerts.csv"
 
-distress_alerts.to_csv(
-    distress_file,
-    index=False
-)
+distress_alerts.to_csv(distress_file, index=False)
 
 print()
 print("Saved:", cashflow_file)

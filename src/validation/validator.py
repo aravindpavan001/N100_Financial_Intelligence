@@ -1,19 +1,10 @@
 import pandas as pd
 
-peer_groups = pd.read_excel(
-    "data/raw/peer_groups.xlsx",
-    header=None
-)
+peer_groups = pd.read_excel("data/raw/peer_groups.xlsx", header=None)
 
-sectors = pd.read_excel(
-    "data/raw/sectors.xlsx",
-    header=None
-)
+sectors = pd.read_excel("data/raw/sectors.xlsx", header=None)
 
-stock_prices = pd.read_excel(
-    "data/raw/stock_prices.xlsx",
-    header=None
-)
+stock_prices = pd.read_excel("data/raw/stock_prices.xlsx", header=None)
 
 print("\nPEER GROUPS")
 print(peer_groups.head(10))

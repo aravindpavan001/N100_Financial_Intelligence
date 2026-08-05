@@ -1,6 +1,10 @@
-import streamlit as st
-import utils.db as db
 import os
+
+import streamlit as st
+
+from utils import db
+
+
 def get_recommendation(row):
 
     quality = row["composite_quality_score"]
@@ -34,12 +38,15 @@ def get_recommendation(row):
         reason = "Weak financial profile or expensive valuation."
 
     return recommendation, reason, score
+
+
 print("=" * 60)
 print("DB MODULE:", db.__file__)
 print("=" * 60)
-import plotly.express as px
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
+import plotly.express as px
 
 print("=== RUNNING THIS APP.PY ===")
 
@@ -59,7 +66,7 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 
 screener_path = BASE_DIR / "output" / "screener_dataset.csv"
 
-screener_df = pd.read_csv(screener_path) 
+screener_df = pd.read_csv(screener_path)
 print("=" * 60)
 print("CSV PATH:", screener_path)
 print("CSV EXISTS:", os.path.exists(screener_path))
@@ -144,7 +151,6 @@ min_interest = st.sidebar.slider(
 )
 
 
-
 filtered = screener_df[
     (screener_df["roe_percentage"] >= min_roe)
     & (screener_df["debt_to_equity"] <= max_debt)
@@ -154,14 +160,9 @@ filtered = screener_df[
     & (screener_df["pe_ratio"] <= max_pe)
     & (screener_df["pb_ratio"] <= max_pb)
     & (screener_df["dividend_yield_pct"] >= min_dividend)
-    & (
-        screener_df["interest_coverage"]
-        .fillna(0)
-        >= min_interest
-    )
+    & (screener_df["interest_coverage"].fillna(0) >= min_interest)
 ]
 st.sidebar.markdown("---")
-
 
 
 selected_company = st.sidebar.selectbox(
@@ -257,58 +258,48 @@ preset = st.sidebar.selectbox(
         "Dividend",
         "Debt Free",
         "Turnaround",
-    ]
+    ],
 )
 
 if preset == "Quality":
     filtered = screener_df[
-        (screener_df["roe_percentage"] >= 20)
-        & (screener_df["debt_to_equity"] <= 0.5)
+        (screener_df["roe_percentage"] >= 20) & (screener_df["debt_to_equity"] <= 0.5)
     ]
 
 elif preset == "Value":
     filtered = screener_df[
-        (screener_df["pe_ratio"] <= 20)
-        & (screener_df["pb_ratio"] <= 3)
+        (screener_df["pe_ratio"] <= 20) & (screener_df["pb_ratio"] <= 3)
     ]
 
 elif preset == "Growth":
     filtered = screener_df[
-        (screener_df["revenue_cagr_5yr"] >= 15)
-        & (screener_df["pat_cagr_5yr"] >= 15)
+        (screener_df["revenue_cagr_5yr"] >= 15) & (screener_df["pat_cagr_5yr"] >= 15)
     ]
 
 elif preset == "Dividend":
-    filtered = screener_df[
-        screener_df["dividend_yield_pct"] >= 2
-    ]
+    filtered = screener_df[screener_df["dividend_yield_pct"] >= 2]
 
 elif preset == "Debt Free":
-    filtered = screener_df[
-        screener_df["debt_to_equity"] <= 0.2
-    ]
+    filtered = screener_df[screener_df["debt_to_equity"] <= 0.2]
 
 elif preset == "Turnaround":
-    filtered = screener_df[
-        screener_df["pat_cagr_5yr"] > 0
-    ]
+    filtered = screener_df[screener_df["pat_cagr_5yr"] > 0]
 
 st.write(f"### {len(filtered)} companies match your filters")
 
 display_df = filtered[
     [
-    "id_company",
-    "company_name",
-    "roe_percentage",
-    "debt_to_equity",
-    "revenue_cagr_5yr",
-    "pat_cagr_5yr",
-    "free_cash_flow_cr",
-    "interest_coverage",
-    "pe_ratio",
-    "pb_ratio",
-    "dividend_yield_pct",
-
+        "id_company",
+        "company_name",
+        "roe_percentage",
+        "debt_to_equity",
+        "revenue_cagr_5yr",
+        "pat_cagr_5yr",
+        "free_cash_flow_cr",
+        "interest_coverage",
+        "pe_ratio",
+        "pb_ratio",
+        "dividend_yield_pct",
     ]
 ]
 
@@ -351,11 +342,11 @@ if not company.empty:
         st.metric("Ticker", row["id"])
 
     with col2:
-     st.image(row["company_logo"], width=120)
+        st.image(row["company_logo"], width=120)
 
     st.write("### About Company")
     st.write(row["about_company"])
-    
+
 else:
     st.error("Company not found.")
 
@@ -366,7 +357,7 @@ st.subheader("Financial KPIs")
 if not kpis.empty:
 
     row = kpis.iloc[0]
-    recommendation, reason, score = get_recommendation(row)   
+    recommendation, reason, score = get_recommendation(row)
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -379,8 +370,8 @@ if not kpis.empty:
 
     with col3:
         st.metric("Revenue CAGR (5Y)", f"{row['revenue_cagr_5yr']:.2f}%")
-        st.metric("Free Cash Flow", f"{row['free_cash_flow_cr']:.2f}")    
-        st.metric("Quality Score",f"{row['composite_quality_score']:.1f}")
+        st.metric("Free Cash Flow", f"{row['free_cash_flow_cr']:.2f}")
+        st.metric("Quality Score", f"{row['composite_quality_score']:.1f}")
         st.subheader("Investment Recommendation")
         st.metric("Recommendation", recommendation)
         st.metric("Valuation Score", f"{score:.0f}/100")
@@ -403,22 +394,19 @@ if not valuation.empty:
         st.metric("EV/EBITDA", f"{row['ev_ebitda']:.2f}")
 
     with c4:
-        st.metric(
-            "Dividend Yield",
-            f"{row['dividend_yield_pct']:.2f}%"
-        )
+        st.metric("Dividend Yield", f"{row['dividend_yield_pct']:.2f}%")
 
         pe = row["pe_ratio"]
 
         if pe <= 15:
-         st.success("🟢 Undervalued")
+            st.success("🟢 Undervalued")
 
         elif pe <= 25:
-          st.warning("🟡 Fairly Valued")
+            st.warning("🟡 Fairly Valued")
 
         else:
-         st.error("🔴 Overvalued")
-         st.subheader("Revenue vs Net Profit")
+            st.error("🔴 Overvalued")
+            st.subheader("Revenue vs Net Profit")
 
 if not history.empty:
 
@@ -427,7 +415,7 @@ if not history.empty:
         x="year",
         y=["sales", "net_profit"],
         barmode="group",
-        title="Revenue vs Net Profit"
+        title="Revenue vs Net Profit",
     )
 
     st.plotly_chart(fig, use_container_width=True)
@@ -445,7 +433,7 @@ if not roe_history.empty:
         x="year",
         y="return_on_equity_pct",
         markers=True,
-        title="Return on Equity Over Time"
+        title="Return on Equity Over Time",
     )
 
     st.plotly_chart(fig, use_container_width=True)
@@ -496,4 +484,4 @@ if not kpis.empty:
     with col2:
         st.error("### Cons")
         for item in cons:
-            st.write(f"❌ {item}")    
+            st.write(f"❌ {item}")

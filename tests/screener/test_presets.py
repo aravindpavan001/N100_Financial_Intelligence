@@ -9,9 +9,7 @@ from src.screener.presets import (
 
 def test_load_presets():
 
-    presets = load_presets(
-        "config/presets.yaml"
-    )
+    presets = load_presets("config/presets.yaml")
 
     assert isinstance(presets, dict)
     assert len(presets) == 6
@@ -34,12 +32,14 @@ def test_invalid_preset():
 
 def test_quality_compounder():
 
-    df = pd.DataFrame({
-        "return_on_equity_pct": [25],
-        "debt_to_equity": [0.4],
-        "free_cash_flow_cr": [500],
-        "revenue_cagr_5yr": [20],
-    })
+    df = pd.DataFrame(
+        {
+            "return_on_equity_pct": [25],
+            "debt_to_equity": [0.4],
+            "free_cash_flow_cr": [500],
+            "revenue_cagr_5yr": [20],
+        }
+    )
 
     presets = {
         "quality": {
@@ -61,11 +61,13 @@ def test_quality_compounder():
 
 def test_growth_accelerator():
 
-    df = pd.DataFrame({
-        "pat_cagr_5yr": [25],
-        "revenue_cagr_5yr": [20],
-        "debt_to_equity": [1],
-    })
+    df = pd.DataFrame(
+        {
+            "pat_cagr_5yr": [25],
+            "revenue_cagr_5yr": [20],
+            "debt_to_equity": [1],
+        }
+    )
 
     presets = {
         "growth": {
@@ -86,12 +88,14 @@ def test_growth_accelerator():
 
 def test_cash_generator():
 
-    df = pd.DataFrame({
-        "free_cash_flow_cr": [2000],
-        "operating_profit_margin_pct": [30],
-        "return_on_equity_pct": [30],
-        "revenue_cagr_5yr": [15],
-    })
+    df = pd.DataFrame(
+        {
+            "free_cash_flow_cr": [2000],
+            "operating_profit_margin_pct": [30],
+            "return_on_equity_pct": [30],
+            "revenue_cagr_5yr": [15],
+        }
+    )
 
     presets = {
         "cash": {
@@ -113,10 +117,12 @@ def test_cash_generator():
 
 def test_debt_free_blue_chip():
 
-    df = pd.DataFrame({
-        "return_on_equity_pct": [25],
-        "debt_to_equity": [0],
-    })
+    df = pd.DataFrame(
+        {
+            "return_on_equity_pct": [25],
+            "debt_to_equity": [0],
+        }
+    )
 
     presets = {
         "debtfree": {

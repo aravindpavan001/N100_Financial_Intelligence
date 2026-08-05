@@ -8,24 +8,16 @@ from src.screener.engine import (
 
 def test_load_config():
 
-    config = load_config(
-        "config/screener_config.yaml"
-    )
+    config = load_config("config/screener_config.yaml")
 
     assert isinstance(config, dict)
 
 
 def test_roe_filter_pass():
 
-    df = pd.DataFrame({
-        "return_on_equity_pct": [20]
-    })
+    df = pd.DataFrame({"return_on_equity_pct": [20]})
 
-    config = {
-        "filters": {
-            "roe_min": 15
-        }
-    }
+    config = {"filters": {"roe_min": 15}}
 
     result = apply_filters(df, config)
 
@@ -34,15 +26,9 @@ def test_roe_filter_pass():
 
 def test_roe_filter_fail():
 
-    df = pd.DataFrame({
-        "return_on_equity_pct": [10]
-    })
+    df = pd.DataFrame({"return_on_equity_pct": [10]})
 
-    config = {
-        "filters": {
-            "roe_min": 15
-        }
-    }
+    config = {"filters": {"roe_min": 15}}
 
     result = apply_filters(df, config)
 
@@ -51,15 +37,9 @@ def test_roe_filter_fail():
 
 def test_de_filter():
 
-    df = pd.DataFrame({
-        "debt_to_equity": [0.5, 2.0]
-    })
+    df = pd.DataFrame({"debt_to_equity": [0.5, 2.0]})
 
-    config = {
-        "filters": {
-            "debt_to_equity_max": 1
-        }
-    }
+    config = {"filters": {"debt_to_equity_max": 1}}
 
     result = apply_filters(df, config)
 
@@ -68,15 +48,9 @@ def test_de_filter():
 
 def test_null_filter():
 
-    df = pd.DataFrame({
-        "return_on_equity_pct": [5, 20]
-    })
+    df = pd.DataFrame({"return_on_equity_pct": [5, 20]})
 
-    config = {
-        "filters": {
-            "roe_min": None
-        }
-    }
+    config = {"filters": {"roe_min": None}}
 
     result = apply_filters(df, config)
 
@@ -85,21 +59,18 @@ def test_null_filter():
 
 def test_sorting():
 
-    df = pd.DataFrame({
-        "composite_quality_score": [
-            10,
-            30,
-            20,
-        ]
-    })
+    df = pd.DataFrame(
+        {
+            "composite_quality_score": [
+                10,
+                30,
+                20,
+            ]
+        }
+    )
 
-    config = {
-        "filters": {}
-    }
+    config = {"filters": {}}
 
     result = apply_filters(df, config)
 
-    assert (
-        result.iloc[0]["composite_quality_score"]
-        == 30
-    )
+    assert result.iloc[0]["composite_quality_score"] == 30

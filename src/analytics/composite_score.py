@@ -1,10 +1,4 @@
-def calculate_quality_score(
-    roe,
-    net_margin,
-    revenue_cagr,
-    pat_cagr,
-    debt
-):
+def calculate_quality_score(roe, net_margin, revenue_cagr, pat_cagr, debt):
     score = 0
 
     # ROE (25 Marks)

@@ -1,12 +1,12 @@
 from src.analytics.cagr import (
-    calculate_cagr,
-    get_cagr_window,
-    calculate_growth_metrics,
-    DECLINE_TO_LOSS,
-    TURNAROUND,
     BOTH_NEGATIVE,
-    ZERO_BASE,
+    DECLINE_TO_LOSS,
     INSUFFICIENT,
+    TURNAROUND,
+    ZERO_BASE,
+    calculate_cagr,
+    calculate_growth_metrics,
+    get_cagr_window,
 )
 
 

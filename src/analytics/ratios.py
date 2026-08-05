@@ -97,6 +97,7 @@ def calculate_roa(net_profit, total_assets):
 
     return (net_profit / total_assets) * 100
 
+
 def calculate_debt_to_equity(borrowings, equity, reserves):
     """
     Calculate Debt-to-Equity Ratio.

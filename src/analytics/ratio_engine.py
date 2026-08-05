@@ -1,32 +1,32 @@
 import os
 import sqlite3
-import pandas as pd
 
-from src.analytics.ratios import (
-    calculate_net_profit_margin,
-    calculate_operating_profit_margin,
-    calculate_roe,
-    calculate_roce,
-    calculate_roa,
-    calculate_debt_to_equity,
-    calculate_interest_coverage,
-    calculate_asset_turnover,
-)
+import pandas as pd
 
 from src.analytics.cagr import (
     calculate_growth_metrics,
 )
-
 from src.analytics.cashflow_kpis import (
-    calculate_free_cash_flow,
     calculate_capex_intensity,
+    calculate_free_cash_flow,
     classify_capital_allocation,
     get_cashflow_sign,
+)
+from src.analytics.ratios import (
+    calculate_asset_turnover,
+    calculate_debt_to_equity,
+    calculate_interest_coverage,
+    calculate_net_profit_margin,
+    calculate_operating_profit_margin,
+    calculate_roa,
+    calculate_roce,
+    calculate_roe,
 )
 
 DB_PATH = "nifty100.db"
 OUTPUT_FOLDER = "output"
 CSV_FILE = os.path.join(OUTPUT_FOLDER, "capital_allocation.csv")
+
 
 def connect_db():
     return sqlite3.connect(DB_PATH)
@@ -61,6 +61,7 @@ def load_tables(conn):
 
     return companies, profit, balance, cashflow, ratios
 
+
 def merge_tables(companies, profit, balance, cashflow):
 
     df = profit.merge(
@@ -76,19 +77,15 @@ def merge_tables(companies, profit, balance, cashflow):
     companies = companies.rename(columns={"id": "company_master_id"})
 
     df = df.merge(
-    companies,
-    left_on="company_id",
-    right_on="company_master_id",
-    how="left",
-)
+        companies,
+        left_on="company_id",
+        right_on="company_master_id",
+        how="left",
+    )
 
     df = df[df["year"] != "TTM"].copy()
 
-    df["year_number"] = (
-        df["year"]
-        .str.extract(r"(\d{4})")
-        .astype(int)
-    )
+    df["year_number"] = df["year"].str.extract(r"(\d{4})").astype(int)
 
     df.sort_values(
         ["company_id", "year_number"],
@@ -102,10 +99,12 @@ def merge_tables(companies, profit, balance, cashflow):
 
     return df
 
+
 def create_output_folder():
 
     if not os.path.exists(OUTPUT_FOLDER):
         os.makedirs(OUTPUT_FOLDER)
+
 
 def build_company_history(df):
     """
@@ -117,11 +116,7 @@ def build_company_history(df):
 
     for company in df["company_id"].unique():
 
-        company_df = (
-            df[df["company_id"] == company]
-            .sort_values("year_number")
-            .copy()
-        )
+        company_df = df[df["company_id"] == company].sort_values("year_number").copy()
 
         history[company] = {
             "sales": company_df["sales"].tolist(),
@@ -159,7 +154,8 @@ def calculate_company_cagr(history):
             "eps": eps_cagr,
         }
 
-    return cagr_results        
+    return cagr_results
+
 
 def calculate_kpis(row, cagr_results, latest_year):
 
@@ -177,37 +173,36 @@ def calculate_kpis(row, cagr_results, latest_year):
     )
 
     roe = calculate_roe(
-    row.net_profit,
-    row.equity_capital,
-    row.reserves,
+        row.net_profit,
+        row.equity_capital,
+        row.reserves,
     )
 
     roce = calculate_roce(
-    row.operating_profit,
-    row.equity_capital,
-    row.reserves,
-    row.borrowings,
-    "General",
+        row.operating_profit,
+        row.equity_capital,
+        row.reserves,
+        row.borrowings,
+        "General",
     )
 
     if row.year_number == latest_year[company]:
 
-     compare_ratio(
-        company,
-        year,
-        "ROE",
-        roe,
-        row.roe_percentage,
-    )
+        compare_ratio(
+            company,
+            year,
+            "ROE",
+            roe,
+            row.roe_percentage,
+        )
 
-     compare_ratio(
-        company,
-        year,
-        "ROCE",
-        roce,
-        row.roce_percentage,
-    )
-
+        compare_ratio(
+            company,
+            year,
+            "ROCE",
+            roce,
+            row.roce_percentage,
+        )
 
     roa = calculate_roa(
         row.net_profit,
@@ -263,6 +258,7 @@ def calculate_kpis(row, cagr_results, latest_year):
         "composite_quality_score": None,
     }
 
+
 def build_capital_allocation(row):
 
     return {
@@ -283,6 +279,7 @@ def build_capital_allocation(row):
             row.financing_activity,
         ),
     }
+
 
 def save_results(conn, ratio_rows):
 
@@ -349,6 +346,7 @@ def save_capital_csv(capital_rows):
         index=False,
     )
 
+
 def write_log(message):
 
     with open(
@@ -358,6 +356,7 @@ def write_log(message):
     ) as file:
 
         file.write(message + "\n")
+
 
 def compare_ratio(
     company,
@@ -383,8 +382,7 @@ def compare_ratio(
     else:
         category = "Version Difference"
 
-    write_log(
-        f"""
+    write_log(f"""
 ========================================
 Company : {company}
 Year : {year}
@@ -394,8 +392,8 @@ Calculated : {calculated:.2f}
 Difference : {difference:.2f}
 Category : {category}
 
-"""
-    )
+""")
+
 
 def main():
 
@@ -427,12 +425,8 @@ def main():
         balance,
         cashflow,
     )
-    latest_year = (
-    merged_df.groupby("company_id")["year_number"]
-    .max()
-    .to_dict()
-    )
-    
+    latest_year = merged_df.groupby("company_id")["year_number"].max().to_dict()
+
     create_output_folder()
 
     history = build_company_history(
@@ -482,5 +476,6 @@ def main():
 
     print("Database Updated")
 
+
 if __name__ == "__main__":
-    main()        
+    main()

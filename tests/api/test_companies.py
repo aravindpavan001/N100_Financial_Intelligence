@@ -4,6 +4,7 @@ from src.api.main import app
 
 client = TestClient(app)
 
+
 def test_company_list():
 
     response = client.get("/api/v1/companies")

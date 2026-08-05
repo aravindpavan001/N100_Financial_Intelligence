@@ -1,7 +1,7 @@
 import sqlite3
-import yaml
-import pandas as pd
 
+import pandas as pd
+import yaml
 
 DB_PATH = "nifty100.db"
 
@@ -59,47 +59,38 @@ def apply_filters(
     filters = config["filters"]
 
     filter_mapping = {
-
         "roe_min": (
             "return_on_equity_pct",
             ">=",
         ),
-
         "debt_to_equity_max": (
             "debt_to_equity",
             "<=",
         ),
-
         "free_cash_flow_min": (
             "free_cash_flow_cr",
             ">=",
         ),
-
         "revenue_cagr_5yr_min": (
             "revenue_cagr_5yr",
             ">=",
         ),
-
         "pat_cagr_5yr_min": (
             "pat_cagr_5yr",
             ">=",
         ),
-
         "opm_min": (
             "operating_profit_margin_pct",
             ">=",
         ),
-
         "icr_min": (
             "interest_coverage",
             ">=",
         ),
-
         "eps_cagr_min": (
             "eps_cagr_5yr",
             ">=",
         ),
-
         "asset_turnover_min": (
             "asset_turnover",
             ">=",
@@ -119,27 +110,23 @@ def apply_filters(
             continue
 
         if operator == ">=":
-            filtered_df = filtered_df[
-                filtered_df[column] >= value
-            ]
+            filtered_df = filtered_df[filtered_df[column] >= value]
 
         elif operator == "<=":
-            filtered_df = filtered_df[
-                filtered_df[column] <= value
-            ]
+            filtered_df = filtered_df[filtered_df[column] <= value]
 
     if "composite_quality_score" in filtered_df.columns:
 
-     filtered_df = filtered_df.sort_values(
-        by="composite_quality_score",
-        ascending=False,
-        na_position="last",
-    )
+        filtered_df = filtered_df.sort_values(
+            by="composite_quality_score",
+            ascending=False,
+            na_position="last",
+        )
 
     filtered_df.reset_index(
-    drop=True,
-    inplace=True,
-)
+        drop=True,
+        inplace=True,
+    )
 
     return filtered_df
 
@@ -191,6 +178,7 @@ def main():
     print()
 
     print("Filtered Rows :", len(filtered))
+
 
 if __name__ == "__main__":
     main()

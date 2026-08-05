@@ -4,6 +4,7 @@ from src.api.main import app
 
 client = TestClient(app)
 
+
 def test_sector_list():
 
     response = client.get("/api/v1/sectors")
@@ -20,21 +21,13 @@ def test_sector_count():
 
 def test_financial_sector():
 
-    response = client.get(
-
-        "/api/v1/sectors/Financials/companies"
-
-    )
+    response = client.get("/api/v1/sectors/Financials/companies")
 
     assert response.status_code == 200
 
 
 def test_invalid_sector():
 
-    response = client.get(
-
-        "/api/v1/sectors/INVALID/companies"
-
-    )
+    response = client.get("/api/v1/sectors/INVALID/companies")
 
     assert response.status_code == 404

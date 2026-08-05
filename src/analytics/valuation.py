@@ -1,6 +1,7 @@
 import sqlite3
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
@@ -40,17 +41,11 @@ print(peer_groups.columns.tolist())
 
 # Latest market cap record for each company
 market_latest = (
-    market_cap.sort_values("year")
-    .groupby("company_id", as_index=False)
-    .last()
+    market_cap.sort_values("year").groupby("company_id", as_index=False).last()
 )
 
 # Latest financial ratios for each company
-ratios_latest = (
-    ratios.sort_values("year")
-    .groupby("company_id", as_index=False)
-    .last()
-)
+ratios_latest = ratios.sort_values("year").groupby("company_id", as_index=False).last()
 
 # Start with companies
 valuation = companies.copy()
@@ -60,7 +55,7 @@ valuation = valuation.merge(
     peer_groups[["company_id", "peer_group_name"]],
     left_on="id",
     right_on="company_id",
-    how="left"
+    how="left",
 ).drop(columns=["company_id"])
 
 # Add market cap
@@ -69,7 +64,7 @@ valuation = valuation.merge(
     left_on="id",
     right_on="company_id",
     how="left",
-    suffixes=("", "_market")
+    suffixes=("", "_market"),
 ).drop(columns=["company_id"])
 
 # Add financial ratios
@@ -78,7 +73,7 @@ valuation = valuation.merge(
     left_on="id",
     right_on="company_id",
     how="left",
-    suffixes=("", "_ratio")
+    suffixes=("", "_ratio"),
 ).drop(columns=["company_id"])
 
 print("Rows:", len(valuation))
@@ -92,7 +87,7 @@ print(
             "pe_ratio",
             "pb_ratio",
             "ev_ebitda",
-            "free_cash_flow_cr"
+            "free_cash_flow_cr",
         ]
     ].head()
 )
@@ -102,8 +97,7 @@ print(
 # ----------------------------
 
 valuation["fcf_yield_pct"] = (
-    valuation["free_cash_flow_cr"] /
-    valuation["market_cap_crore"]
+    valuation["free_cash_flow_cr"] / valuation["market_cap_crore"]
 ) * 100
 
 peer_pe = (
@@ -113,16 +107,12 @@ peer_pe = (
     .rename(columns={"pe_ratio": "peer_median_pe"})
 )
 
-valuation = valuation.merge(
-    peer_pe,
-    on="peer_group_name",
-    how="left"
-)
+valuation = valuation.merge(peer_pe, on="peer_group_name", how="left")
 
 valuation["pe_vs_peer_pct"] = (
-    (valuation["pe_ratio"] - valuation["peer_median_pe"])
-    / valuation["peer_median_pe"]
+    (valuation["pe_ratio"] - valuation["peer_median_pe"]) / valuation["peer_median_pe"]
 ) * 100
+
 
 def valuation_flag(x):
     if pd.isna(x):
@@ -138,9 +128,7 @@ def valuation_flag(x):
         return "Fair"
 
 
-valuation["valuation_flag"] = valuation["pe_vs_peer_pct"].apply(
-    valuation_flag
-)
+valuation["valuation_flag"] = valuation["pe_vs_peer_pct"].apply(valuation_flag)
 
 print()
 
@@ -173,15 +161,9 @@ output = valuation[
     ]
 ]
 
-output.to_excel(
-    OUTPUT_DIR / "valuation_summary.xlsx",
-    index=False
-)
+output.to_excel(OUTPUT_DIR / "valuation_summary.xlsx", index=False)
 
-output.to_csv(
-    OUTPUT_DIR / "valuation_flags.csv",
-    index=False
-)
+output.to_csv(OUTPUT_DIR / "valuation_flags.csv", index=False)
 
 print()
 

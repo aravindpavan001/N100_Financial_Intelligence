@@ -1,11 +1,12 @@
 import os
 import sqlite3
-import pandas as pd
 
 # -----------------------------
 # Connect to SQLite
 # -----------------------------
 from pathlib import Path
+
+import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 DB_PATH = BASE_DIR / "nifty100.db"
@@ -27,18 +28,14 @@ ratios["year_num"] = ratios["year"].str[-4:].astype(int)
 # -----------------------------
 # Keep latest financial ratio per company
 # -----------------------------
-ratios = (
-    ratios.sort_values("year_num")
-          .drop_duplicates(subset="company_id", keep="last")
+ratios = ratios.sort_values("year_num").drop_duplicates(
+    subset="company_id", keep="last"
 )
 
 # -----------------------------
 # Keep latest market data per company
 # -----------------------------
-market = (
-    market.sort_values("year")
-          .drop_duplicates(subset="company_id", keep="last")
-)
+market = market.sort_values("year").drop_duplicates(subset="company_id", keep="last")
 
 print("Companies:", len(companies))
 print("Latest Ratios:", len(ratios))
@@ -60,7 +57,7 @@ df = companies.merge(
     left_on="id",
     right_on="company_id",
     how="left",
-    suffixes=("_company", "_ratio")
+    suffixes=("_company", "_ratio"),
 )
 
 df = df.merge(
@@ -68,7 +65,7 @@ df = df.merge(
     left_on="id_company",
     right_on="company_id",
     how="left",
-    suffixes=("", "_market")
+    suffixes=("", "_market"),
 )
 
 

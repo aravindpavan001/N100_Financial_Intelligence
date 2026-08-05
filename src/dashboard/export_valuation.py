@@ -1,7 +1,8 @@
-import pandas as pd
 from pathlib import Path
 
-import utils.db as db
+import pandas as pd
+
+from utils import db
 
 
 def get_recommendation(row):
@@ -11,13 +12,13 @@ def get_recommendation(row):
     debt = row["debt_to_equity"]
 
     if pd.isna(quality):
-     quality = 0
+        quality = 0
 
     if pd.isna(pe):
-     pe = 999
+        pe = 999
 
     if pd.isna(debt):
-     debt = 999
+        debt = 999
 
     score = quality
 
@@ -57,18 +58,20 @@ for company in companies["company_name"]:
     row = kpis.iloc[0]
 
     if pd.isna(row["composite_quality_score"]):
-     continue
+        continue
 
     recommendation, score = get_recommendation(row)
 
-    results.append({
-        "Company": company,
-        "Quality Score": row["composite_quality_score"],
-        "PE Ratio": row["pe_ratio"],
-        "Debt to Equity": row["debt_to_equity"],
-        "Recommendation": recommendation,
-        "Valuation Score": score,
-    })
+    results.append(
+        {
+            "Company": company,
+            "Quality Score": row["composite_quality_score"],
+            "PE Ratio": row["pe_ratio"],
+            "Debt to Equity": row["debt_to_equity"],
+            "Recommendation": recommendation,
+            "Valuation Score": score,
+        }
+    )
 
 df = pd.DataFrame(results)
 

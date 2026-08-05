@@ -1,11 +1,9 @@
 import sqlite3
 from pathlib import Path
 
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
-import numpy as np
-
 from scipy.stats import zscore
 
 # ==========================================================
@@ -20,15 +18,9 @@ OUTPUT_DIR = BASE_DIR / "output"
 
 REPORT_DIR = BASE_DIR / "reports"
 
-OUTPUT_DIR.mkdir(
-    parents=True,
-    exist_ok=True
-)
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-REPORT_DIR.mkdir(
-    parents=True,
-    exist_ok=True
-)
+REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ==========================================================
 # DATABASE
@@ -36,20 +28,11 @@ REPORT_DIR.mkdir(
 
 conn = sqlite3.connect(DB_PATH)
 
-financial_ratios = pd.read_sql(
-    "SELECT * FROM financial_ratios",
-    conn
-)
+financial_ratios = pd.read_sql("SELECT * FROM financial_ratios", conn)
 
-companies = pd.read_sql(
-    "SELECT * FROM companies",
-    conn
-)
+companies = pd.read_sql("SELECT * FROM companies", conn)
 
-sectors = pd.read_sql(
-    "SELECT * FROM sectors",
-    conn
-)
+sectors = pd.read_sql("SELECT * FROM sectors", conn)
 
 conn.close()
 
@@ -57,26 +40,17 @@ conn.close()
 # LOAD CLUSTER LABELS
 # ==========================================================
 
-cluster_labels = pd.read_csv(
-    OUTPUT_DIR / "cluster_labels.csv"
-)
+cluster_labels = pd.read_csv(OUTPUT_DIR / "cluster_labels.csv")
 
 # ==========================================================
 # LOAD LATEST YEAR
 # ==========================================================
 
 latest = (
-
-    financial_ratios
-
-    .sort_values("year")
-
+    financial_ratios.sort_values("year")
     .groupby("company_id")
-
     .tail(1)
-
     .reset_index(drop=True)
-
 )
 
 print()
@@ -92,64 +66,24 @@ print(len(latest))
 # ==========================================================
 
 profile_df = latest.merge(
-
-    cluster_labels[
-        [
-            "company_id",
-            "cluster_id",
-            "cluster_name"
-        ]
-    ],
-
+    cluster_labels[["company_id", "cluster_id", "cluster_name"]],
     on="company_id",
-
-    how="left"
-
+    how="left",
 )
 
 profile_df = profile_df.merge(
-
-    sectors[
-        [
-            "company_id",
-            "broad_sector",
-            "sub_sector"
-        ]
-    ],
-
-    on="company_id",
-
-    how="left"
-
+    sectors[["company_id", "broad_sector", "sub_sector"]], on="company_id", how="left"
 )
 
 profile_df = profile_df.merge(
-
-    companies[
-        [
-            "id",
-            "company_name"
-        ]
-    ],
-
-    left_on="company_id",
-
-    right_on="id",
-
-    how="left"
-
+    companies[["id", "company_name"]], left_on="company_id", right_on="id", how="left"
 )
 
 profile_df["company_name"] = (
-
     profile_df["company_name"]
-
     .astype(str)
-
     .str.replace("\n", " ", regex=False)
-
     .str.strip()
-
 )
 
 print()
@@ -165,114 +99,34 @@ print(profile_df.head())
 # ==========================================================
 
 FEATURES = [
-
     "return_on_equity_pct",
-
     "debt_to_equity",
-
     "revenue_cagr_5yr",
-
     "free_cash_flow_cr",
-
-    "operating_profit_margin_pct"
-
+    "operating_profit_margin_pct",
 ]
 
 # ==========================================================
 # CLUSTER PROFILING
 # ==========================================================
 
-cluster_profiles = (
+cluster_profiles = profile_df.groupby("cluster_id")[FEATURES].agg(["mean", "median"])
 
-    profile_df
+cluster_profiles.columns = ["_".join(col) for col in cluster_profiles.columns]
 
-    .groupby("cluster_id")[FEATURES]
-
-    .agg(
-
-        [
-
-            "mean",
-
-            "median"
-
-        ]
-
-    )
-
-)
-
-cluster_profiles.columns = [
-
-    "_".join(col)
-
-    for col in cluster_profiles.columns
-
-]
-
-cluster_profiles = (
-
-    cluster_profiles
-
-    .reset_index()
-
-)
+cluster_profiles = cluster_profiles.reset_index()
 
 # ==========================================================
 # ADD CLUSTER NAME
 # ==========================================================
 
-cluster_names = (
+cluster_names = profile_df[["cluster_id", "cluster_name"]].drop_duplicates()
 
-    profile_df[
-        [
-            "cluster_id",
-            "cluster_name"
-        ]
-    ]
-
-    .drop_duplicates()
-
-)
-
-cluster_profiles = cluster_profiles.merge(
-
-    cluster_names,
-
-    on="cluster_id",
-
-    how="left"
-
-)
+cluster_profiles = cluster_profiles.merge(cluster_names, on="cluster_id", how="left")
 
 cluster_profiles = cluster_profiles[
-
-    [
-
-        "cluster_id",
-
-        "cluster_name"
-
-    ]
-
-    +
-
-    [
-
-        c
-
-        for c in cluster_profiles.columns
-
-        if c not in [
-
-            "cluster_id",
-
-            "cluster_name"
-
-        ]
-
-    ]
-
+    ["cluster_id", "cluster_name"]
+    + [c for c in cluster_profiles.columns if c not in ["cluster_id", "cluster_name"]]
 ]
 
 # ==========================================================
@@ -281,13 +135,7 @@ cluster_profiles = cluster_profiles[
 
 profile_path = OUTPUT_DIR / "cluster_profiles.csv"
 
-cluster_profiles.to_csv(
-
-    profile_path,
-
-    index=False
-
-)
+cluster_profiles.to_csv(profile_path, index=False)
 
 # ==========================================================
 # SHOW CLUSTER MEMBERS
@@ -299,11 +147,7 @@ print("=" * 60)
 print("CLUSTER MEMBERS")
 print("=" * 60)
 
-for cluster in sorted(
-
-    profile_df["cluster_id"].dropna().unique()
-
-):
+for cluster in sorted(profile_df["cluster_id"].dropna().unique()):
 
     print()
 
@@ -313,15 +157,7 @@ for cluster in sorted(
 
     print("-" * 50)
 
-    members = profile_df[
-
-        profile_df["cluster_id"] == cluster
-
-    ][
-
-        "company_name"
-
-    ]
+    members = profile_df[profile_df["cluster_id"] == cluster]["company_name"]
 
     for company in members:
 
@@ -360,54 +196,24 @@ print(profile_path)
 # ==========================================================
 
 business_names = {
-
     0: "Stable Compounders",
-
     1: "High Growth Finance",
-
     2: "Balanced Performers",
-
     3: "Defense Leaders",
-
-    4: "Banking Institutions"
-
+    4: "Banking Institutions",
 }
 
-cluster_labels["cluster_name"] = (
+cluster_labels["cluster_name"] = cluster_labels["cluster_id"].map(business_names)
 
-    cluster_labels["cluster_id"]
-
-    .map(business_names)
-
-)
-
-cluster_profiles["cluster_name"] = (
-
-    cluster_profiles["cluster_id"]
-
-    .map(business_names)
-
-)
+cluster_profiles["cluster_name"] = cluster_profiles["cluster_id"].map(business_names)
 
 # ==========================================================
 # SAVE UPDATED FILES
 # ==========================================================
 
-cluster_labels.to_csv(
+cluster_labels.to_csv(OUTPUT_DIR / "cluster_labels.csv", index=False)
 
-    OUTPUT_DIR / "cluster_labels.csv",
-
-    index=False
-
-)
-
-cluster_profiles.to_csv(
-
-    OUTPUT_DIR / "cluster_profiles.csv",
-
-    index=False
-
-)
+cluster_profiles.to_csv(OUTPUT_DIR / "cluster_profiles.csv", index=False)
 
 print()
 
@@ -415,18 +221,7 @@ print("=" * 60)
 print("UPDATED CLUSTER NAMES")
 print("=" * 60)
 
-print(
-
-    cluster_profiles[[
-
-        "cluster_id",
-
-        "cluster_name"
-
-    ]]
-
-)
-
+print(cluster_profiles[["cluster_id", "cluster_name"]])
 
 
 # ==========================================================
@@ -434,50 +229,23 @@ print(
 # ==========================================================
 
 HEATMAP_FEATURES = [
-
     "return_on_equity_pct",
-
     "operating_profit_margin_pct",
-
     "debt_to_equity",
-
     "interest_coverage",
-
     "asset_turnover",
-
     "revenue_cagr_5yr",
-
     "pat_cagr_5yr",
-
     "free_cash_flow_cr",
-
     "earnings_per_share",
-
-    "dividend_payout_ratio_pct"
-
+    "dividend_payout_ratio_pct",
 ]
 
-corr = profile_df[
+corr = profile_df[HEATMAP_FEATURES].corr(method="pearson")
 
-    HEATMAP_FEATURES
+plt.figure(figsize=(10, 8))
 
-].corr(method="pearson")
-
-plt.figure(figsize=(10,8))
-
-sns.heatmap(
-
-    corr,
-
-    annot=True,
-
-    cmap="RdYlBu",
-
-    center=0,
-
-    fmt=".2f"
-
-)
+sns.heatmap(corr, annot=True, cmap="RdYlBu", center=0, fmt=".2f")
 
 plt.title("Financial KPI Correlation Heatmap")
 
@@ -485,13 +253,7 @@ plt.tight_layout()
 
 heatmap_path = REPORT_DIR / "correlation_heatmap.png"
 
-plt.savefig(
-
-    heatmap_path,
-
-    dpi=200
-
-)
+plt.savefig(heatmap_path, dpi=200)
 
 plt.close()
 
@@ -508,38 +270,23 @@ print(heatmap_path)
 # ==========================================================
 
 PORTFOLIO_STATS_FEATURES = [
-
     "return_on_equity_pct",
-
     "operating_profit_margin_pct",
-
     "debt_to_equity",
-
     "interest_coverage",
-
     "asset_turnover",
-
     "revenue_cagr_5yr",
-
     "pat_cagr_5yr",
-
     "free_cash_flow_cr",
-
     "earnings_per_share",
-
-    "dividend_payout_ratio_pct"
-
+    "dividend_payout_ratio_pct",
 ]
 
 outliers = []
 
 for sector in profile_df["broad_sector"].dropna().unique():
 
-    sector_df = profile_df[
-
-        profile_df["broad_sector"] == sector
-
-    ].copy()
+    sector_df = profile_df[profile_df["broad_sector"] == sector].copy()
 
     for metric in PORTFOLIO_STATS_FEATURES:
 
@@ -547,49 +294,28 @@ for sector in profile_df["broad_sector"].dropna().unique():
 
             continue
 
-        sector_df["z"] = zscore(
+        sector_df["z"] = zscore(sector_df[metric], nan_policy="omit")
 
-            sector_df[metric],
-
-            nan_policy="omit"
-
-        )
-
-        flagged = sector_df[
-
-            sector_df["z"].abs() > 3
-
-        ]
+        flagged = sector_df[sector_df["z"].abs() > 3]
 
         for _, row in flagged.iterrows():
 
-            outliers.append({
-
-                "company_id": row["company_id"],
-
-                "company_name": row["company_name"],
-
-                "sector": sector,
-
-                "metric": metric,
-
-                "value": row[metric],
-
-                "z_score": row["z"]
-
-            })
+            outliers.append(
+                {
+                    "company_id": row["company_id"],
+                    "company_name": row["company_name"],
+                    "sector": sector,
+                    "metric": metric,
+                    "value": row[metric],
+                    "z_score": row["z"],
+                }
+            )
 
 outlier_df = pd.DataFrame(outliers)
 
 outlier_path = OUTPUT_DIR / "outlier_report.csv"
 
-outlier_df.to_csv(
-
-    outlier_path,
-
-    index=False
-
-)
+outlier_df.to_csv(outlier_path, index=False)
 
 print()
 
@@ -609,37 +335,24 @@ for metric in PORTFOLIO_STATS_FEATURES:
 
     values = profile_df[metric].dropna()
 
-    stats.append({
-
-        "metric": metric,
-
-        "P10": values.quantile(0.10),
-
-        "P25": values.quantile(0.25),
-
-        "P50": values.quantile(0.50),
-
-        "P75": values.quantile(0.75),
-
-        "P90": values.quantile(0.90),
-
-        "Mean": values.mean(),
-
-        "Std": values.std()
-
-    })
+    stats.append(
+        {
+            "metric": metric,
+            "P10": values.quantile(0.10),
+            "P25": values.quantile(0.25),
+            "P50": values.quantile(0.50),
+            "P75": values.quantile(0.75),
+            "P90": values.quantile(0.90),
+            "Mean": values.mean(),
+            "Std": values.std(),
+        }
+    )
 
 portfolio_stats = pd.DataFrame(stats)
 
 stats_path = OUTPUT_DIR / "portfolio_stats.csv"
 
-portfolio_stats.to_csv(
-
-    stats_path,
-
-    index=False
-
-)
+portfolio_stats.to_csv(stats_path, index=False)
 
 print()
 

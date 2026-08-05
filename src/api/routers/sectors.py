@@ -1,32 +1,20 @@
 import pandas as pd
-
-from fastapi import (
-    APIRouter,
-    HTTPException
-)
+from fastapi import APIRouter, HTTPException
 
 from src.api.database import get_db_connection
 
-
-router = APIRouter(
-    tags=["Sectors"]
-)
+router = APIRouter(tags=["Sectors"])
 
 # ==========================================================
 # LOAD TABLES
 # ==========================================================
 
+
 def load_table(table_name):
 
     conn = get_db_connection()
 
-    df = pd.read_sql(
-
-        f"SELECT * FROM {table_name}",
-
-        conn
-
-    )
+    df = pd.read_sql(f"SELECT * FROM {table_name}", conn)
 
     conn.close()
 
@@ -46,219 +34,94 @@ sectors = load_table("sectors")
 # LATEST YEAR
 # ==========================================================
 
-latest_ratios = (
+latest_ratios = financial_ratios.sort_values("year").groupby("company_id").tail(1)
 
-    financial_ratios
-
-    .sort_values("year")
-
-    .groupby("company_id")
-
-    .tail(1)
-
-)
-
-latest_market = (
-
-    market_cap
-
-    .sort_values("year")
-
-    .groupby("company_id")
-
-    .tail(1)
-
-)
+latest_market = market_cap.sort_values("year").groupby("company_id").tail(1)
 
 
 # ==========================================================
 # GET ALL SECTORS
 # ==========================================================
 
-@router.get("/sectors")
 
+@router.get("/sectors")
 def get_sectors():
 
-    df = latest_ratios.merge(
-
-        sectors,
-
-        on="company_id",
-
-        how="left"
-
-    )
+    df = latest_ratios.merge(sectors, on="company_id", how="left")
 
     df = df.merge(
-
-        latest_market[
-
-            [
-
-                "company_id",
-
-                "pe_ratio"
-
-            ]
-
-        ],
-
-        on="company_id",
-
-        how="left"
-
+        latest_market[["company_id", "pe_ratio"]], on="company_id", how="left"
     )
 
     summary = (
-
-        df
-
-        .groupby("broad_sector")
-
+        df.groupby("broad_sector")
         .agg(
-
             company_count=("company_id", "count"),
-
             median_roe=("return_on_equity_pct", "median"),
-
             median_pe=("pe_ratio", "median"),
-
-            median_de=("debt_to_equity", "median")
-
+            median_de=("debt_to_equity", "median"),
         )
-
         .reset_index()
-
         .sort_values("broad_sector")
-
     )
 
     summary = summary.astype(object)
 
-    summary = summary.where(
+    summary = summary.where(pd.notnull(summary), None)
 
-        pd.notnull(summary),
-
-        None
-
-    )
-
-    return summary.to_dict(
-
-        orient="records"
-
-    )
+    return summary.to_dict(orient="records")
 
 
 # ==========================================================
 # GET COMPANIES INSIDE A SECTOR
 # ==========================================================
 
+
 @router.get("/sectors/{sector}/companies")
-
-def get_sector_companies(
-
-    sector: str
-
-):
+def get_sector_companies(sector: str):
 
     df = companies.merge(
-
         sectors,
-
         left_on="id",
-
         right_on="company_id",
-
         how="left",
-
-        suffixes=("", "_sector")
-
+        suffixes=("", "_sector"),
     )
-
 
     df = df.merge(
-
         latest_ratios[
-
             [
-
                 "company_id",
-
                 "return_on_equity_pct",
-
                 "debt_to_equity",
-
-                "composite_quality_score"
-
+                "composite_quality_score",
             ]
-
         ],
-
         left_on="id",
-
         right_on="company_id",
-
-        how="left"
-
+        how="left",
     )
 
-    filtered = df[
-
-        df["broad_sector"]
-
-        .str.lower()
-
-        ==
-
-        sector.lower()
-
-    ]
+    filtered = df[df["broad_sector"].str.lower() == sector.lower()]
 
     if filtered.empty:
 
-        raise HTTPException(
-
-            status_code=404,
-
-            detail="Sector not found."
-
-        )
+        raise HTTPException(status_code=404, detail="Sector not found.")
 
     output = filtered[
-
         [
-
             "id",
-
             "company_name",
-
             "broad_sector",
-
             "sub_sector",
-
             "return_on_equity_pct",
-
             "debt_to_equity",
-
-            "composite_quality_score"
-
+            "composite_quality_score",
         ]
-
     ].copy()
 
     output = output.astype(object)
 
-    output = output.where(
+    output = output.where(pd.notnull(output), None)
 
-        pd.notnull(output),
-
-        None
-
-    )
-
-    return output.to_dict(
-
-        orient="records"
-
-    )
+    return output.to_dict(orient="records")

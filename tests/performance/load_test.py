@@ -1,7 +1,8 @@
 import threading
 import time
-import requests
+
 import pandas as pd
+import requests
 
 URL = "http://127.0.0.1:8000/api/v1/screener"
 
@@ -20,13 +21,7 @@ def hit_api():
 
         print("Status:", response.status_code)
 
-        results.append({
-
-            "status": response.status_code,
-
-            "time": elapsed
-
-        })
+        results.append({"status": response.status_code, "time": elapsed})
 
     except Exception as e:
 
@@ -34,13 +29,7 @@ def hit_api():
 
         print("ERROR:", e)
 
-        results.append({
-
-            "status": "FAILED",
-
-            "time": elapsed
-
-        })
+        results.append({"status": "FAILED", "time": elapsed})
 
 
 threads = []
@@ -85,21 +74,15 @@ print("Successful :", successful)
 
 print("Failed :", failed)
 
-print("Average :", round(average,3))
+print("Average :", round(average, 3))
 
-print("Minimum :", round(minimum,3))
+print("Minimum :", round(minimum, 3))
 
-print("Maximum :", round(maximum,3))
+print("Maximum :", round(maximum, 3))
 
-print("Total :", round(total,3))
+print("Total :", round(total, 3))
 
 print("=" * 50)
 
 
-df.to_csv(
-
-    "reports/performance_results.csv",
-
-    index=False
-
-)
+df.to_csv("reports/performance_results.csv", index=False)
