@@ -6,25 +6,112 @@ The N100 Financial Intelligence Platform is an end-to-end financial analytics ap
 
 The project combines an ETL pipeline, KPI calculation engine, interactive Streamlit dashboard and FastAPI backend to provide a complete financial intelligence platform for company analysis, screening and benchmarking.
 
+---
+
+#  Live Demo
+
+**Live Dashboard:**  
+[Open Streamlit Dashboard](https://n100financialintelligence-5yznrrsl3x4wefhje8us3o.streamlit.app/)
+
+**API Documentation:**  
+[Open FastAPI Swagger Documentation](https://n100-financial-intelligence-api.onrender.com/docs)
 
 
-# Key Features
+> The Streamlit dashboard link will be updated once the current deployment URL is restored.
+
+---
+
+#  Project Highlights
+
+- **92 Nifty 100 companies** analysed
+- **50+ financial KPIs**
+- Automated ETL pipeline for importing financial datasets
+- Data validation using custom Data Quality (DQ) rules
+- SQLite-based financial data storage
+- Financial KPI calculation engine
+- Interactive Streamlit dashboard
+- FastAPI REST API with Swagger documentation
+- **101 automated tests passing**
+- API performance testing with concurrent requests
+- PDF tearsheet generation
+- Excel and CSV export
+- Company screening and peer benchmarking
+- Sector-level financial analysis
+
+---
+
+#  Key Analytical Insights
+
+The platform enables analysis of financial performance across the Nifty 100 using profitability, growth, leverage, valuation and cash-flow metrics.
+
+Examples of analytical questions supported by the platform:
+
+- Which companies demonstrate strong profitability and return on equity?
+- Which companies combine strong growth with healthy cash generation?
+- Which companies have relatively high leverage or weaker interest coverage?
+- How do companies compare with their sector peers?
+- Which sectors demonstrate stronger financial performance?
+- How effectively are companies converting operating cash flow into Free Cash Flow?
+
+The platform is designed to help analysts move from raw financial data to structured comparisons and financial insights.
+
+---
+
+#  Key Features
+
+## Data Eng
 
 - Automated ETL pipeline for importing Excel datasets into SQLite
 - Data validation using custom Data Quality (DQ) rules
-- Financial KPI calculation engine
-- Company profile dashboard
-- Financial stock screener
-- Peer comparison analysis
-- Sector analytics
-- Capital allocation analysis
-- Valuation engine
-- FastAPI REST API
-- Interactive Streamlit dashboard
-- PDF tearsheet generation
-- Excel and CSV export
-- Comprehensive unit and API testing
+- Load auditing and validation reporting
+- Structured financial data storage
 
+## Financial Analytics
+
+- Financial KPI calculation engine
+- Company financial analysis
+- Profitability analysis
+- Growth analysis
+- Leverage and capital structure analysis
+- Cash flow analysis
+- Free Cash Flow analysis
+- Valuation analysis
+- Sector analytics
+- Peer benchmarking
+- Capital allocation analysis
+
+## Interactive Dashboard
+
+The Streamlit dashboard provides an interactive interface for exploring financial performance across the Nifty 100.
+
+Dashboard modules include:
+
+- Home
+- Company Profile
+- Stock Screener
+- Peer Comparison
+- Sector Analytics
+- Capital Allocation
+- Reports
+
+## API
+
+The FastAPI backend provides REST endpoints for accessing and analysing financial data.
+
+The API includes:
+
+- Health
+- Companies
+- Screener
+- Sectors
+- Peer Comparison
+- Market Capitalisation
+- Portfolio Statistics
+- Documents
+
+Interactive API documentation is available through Swagger UI.
+
+---
 
 
 # Technology Stack
@@ -43,172 +130,6 @@ The project combines an ETL pipeline, KPI calculation engine, interactive Stream
 - VS Code
 
 
-
-# Installation
-
-Clone the repository
-
-```bash
-git clone <repository-url>
-```
-
-Move into the project directory
-
-```bash
-cd N100_Financial_Intelligence
-```
-
-Create a virtual environment
-
-```bash
-python -m venv venv
-```
-
-Activate the environment
-
-Windows
-
-```bash
-venv\Scripts\activate
-```
-
-Install project dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-
-
-# ETL Pipeline
-
-Load the source datasets into the SQLite database.
-
-```bash
-python src/etl/loader.py
-```
-
-Validate the datasets
-
-```bash
-python src/validation/validator.py
-```
-
-Generate financial KPIs
-
-```bash
-python src/kpi/ratios.py
-```
-
-
-# Running the Dashboard
-
-Launch the Streamlit dashboard
-
-```bash
-streamlit run src/dashboard/app.py
-```
-
-
-# Running the API
-
-Start the FastAPI server
-
-```bash
-uvicorn src.api.main:app --reload --port 8000
-```
-
-Swagger documentation
-
-```
-http://127.0.0.1:8000/docs
-```
-
-
-# Running Tests
-
-Run the complete test suite
-
-```bash
-pytest
-```
-
-Generate the HTML test report
-
-```bash
-pytest tests --html=reports/pytest_report.html
-```
-
-
-
-# Dashboard Modules
-
-### Home
-
-Displays key financial metrics and an overview of the platform.
-
-### Company Profile
-
-Shows detailed company information, historical performance and financial ratios.
-
-### Stock Screener
-
-Filters companies using financial metrics such as ROE, Debt-to-Equity, Free Cash Flow and CAGR.
-
-### Peer Comparison
-
-Compares companies against industry peers using percentile rankings and radar metrics.
-
-### Sector Analytics
-
-Provides sector-level comparisons and performance insights.
-
-### Capital Allocation
-
-Analyses cash flow quality, capital allocation strategy and Free Cash Flow metrics.
-
-### Reports
-
-Provides downloadable reports, valuation summaries and analytical outputs.
-
-
-# API Modules
-
-The FastAPI backend exposes REST endpoints including:
-
-- Health
-- Companies
-- Screener
-- Sectors
-- Peer Comparison
-- Market Capitalisation
-- Portfolio Statistics
-- Documents
-
-Interactive API documentation is available through Swagger UI.
-
-
-# Project Structure
-
-N100_Financial_Intelligence/
-
-├── data/
-├── docs/
-├── output/
-├── reports/
-├── sql/
-├── src/
-│   ├── analytics/
-│   ├── api/
-│   ├── dashboard/
-│   ├── etl/
-│   ├── kpi/
-│   ├── nlp/
-│   └── validation/
-├── tests/
-└── README.md
-
-
 # Generated Outputs
 
 Examples of generated project outputs include:
@@ -223,14 +144,4 @@ Examples of generated project outputs include:
 - performance_results.csv
 
 
-# Future Improvements
-
-- PostgreSQL support
-- Docker deployment
-- User authentication
-- CI/CD pipeline
-- Cloud deployment
-- Live market data integration
-- Portfolio management
-- Role-based access control
 
